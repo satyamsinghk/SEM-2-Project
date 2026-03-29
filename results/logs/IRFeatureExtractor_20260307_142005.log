@@ -1,0 +1,4 @@
+2026-03-07 14:20:12,259 | IRFeatureExtractor | INFO | __init__:47 | Initialized IRFeatureExtractor: Autophase=56, CFG=10, Total=66
+2026-03-07 14:20:12,323 | IRFeatureExtractor | INFO | extract_batch:82 | Extracted features for 30 programs, shape: (30, 66)
+2026-03-07 14:22:47,756 | IRFeatureExtractor | INFO | __init__:47 | Initialized IRFeatureExtractor: Autophase=56, CFG=10, Total=66
+2026-03-07 14:22:47,850 | IRFeatureExtractor | INFO | extract_batch:82 | Extracted features for 30 programs, shape: (30, 66)

@@ -1,0 +1,5 @@
+2026-03-07 14:17:55,984 | Ensemble | INFO | train:78 | Training Ensemble on 944 samples
+2026-03-07 14:17:55,984 | Ensemble | INFO | train:83 | --- Training random_forest ---
+2026-03-07 14:18:09,453 | Ensemble | INFO | train:83 | --- Training xgboost ---
+2026-03-07 14:18:57,575 | Ensemble | INFO | train:83 | --- Training dnn ---
+2026-03-07 14:19:05,726 | Ensemble | INFO | _optimize_weights:177 | Optimized weights: {'random_forest': 0.3333, 'xgboost': 0.3333, 'dnn': 0.3333}

@@ -1,0 +1,2 @@
+2026-03-07 14:20:12,325 | PassManager | INFO | __init__:109 | Initialized PassManager with 10 pass sequence classes, 40 available passes
+2026-03-07 14:22:32,634 | PassManager | INFO | __init__:109 | Initialized PassManager with 10 pass sequence classes, 40 available passes

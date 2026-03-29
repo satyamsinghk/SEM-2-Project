@@ -1,0 +1,2 @@
+2026-03-07 13:42:22,198 | DNN | INFO | _build_torch_model:99 | Built PyTorch DNN: 69 → 256 → 128 → 64 → 10
+2026-03-07 13:42:22,202 | DNN | INFO | _train_torch:146 | Training DNN (PyTorch) on 944 samples

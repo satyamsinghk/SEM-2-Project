@@ -1,0 +1,4 @@
+2026-03-07 14:22:33,788 | IterativeCompilation | INFO | evaluate_multiple_budgets:123 | Budget=10: avg_speedup=1.0513, avg_time=0.0090s
+2026-03-07 14:22:34,763 | IterativeCompilation | INFO | evaluate_multiple_budgets:123 | Budget=50: avg_speedup=1.0745, avg_time=0.0324s
+2026-03-07 14:22:37,057 | IterativeCompilation | INFO | evaluate_multiple_budgets:123 | Budget=100: avg_speedup=1.0740, avg_time=0.0764s
+2026-03-07 14:22:47,712 | IterativeCompilation | INFO | evaluate_multiple_budgets:123 | Budget=500: avg_speedup=1.0740, avg_time=0.3548s
