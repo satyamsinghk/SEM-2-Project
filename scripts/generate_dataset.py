@@ -375,6 +375,135 @@ def create_polybench_programs() -> List[ProgramCharacteristics]:
     return programs
 
 
+def create_cpp_programs() -> List[ProgramCharacteristics]:
+    """
+    Simulate LLVM IR characteristics typical of C++ programs (OOP, STL, Exceptions).
+    These typically have deeper call stacks, more functions, more phi nodes, and invoke instructions.
+    """
+    programs = []
+    
+    programs.append(ProgramCharacteristics(
+        name="cpp_vector_sort", language="cpp", num_functions=15, num_basic_blocks=120, num_instructions=1500,
+        num_load_inst=300, num_store_inst=150, num_branch_inst=80, num_call_inst=45,
+        num_binary_ops=250, num_unary_ops=15, num_int_inst=400, num_float_inst=100,
+        num_gep_inst=180, num_phi_nodes=65, num_alloca_inst=40, num_icmp_inst=60,
+        num_fcmp_inst=0, num_select_inst=10, num_switch_inst=2, num_return_inst=15,
+        num_edges=160, num_crit_edges=25, num_cond_br=65, num_uncond_br=15,
+        num_mult=80, num_div=10, num_shift=15, num_and_or=20, num_xor=5,
+        avg_args_per_func=4.5, std_args_per_func=2.0, loop_depth=3, num_loops=8
+    ))
+
+    programs.append(ProgramCharacteristics(
+        name="cpp_hash_map", language="cpp", num_functions=22, num_basic_blocks=180, num_instructions=2100,
+        num_load_inst=450, num_store_inst=200, num_branch_inst=120, num_call_inst=80,
+        num_binary_ops=300, num_unary_ops=25, num_int_inst=600, num_float_inst=0,
+        num_gep_inst=250, num_phi_nodes=90, num_alloca_inst=60, num_icmp_inst=95,
+        num_fcmp_inst=0, num_select_inst=15, num_switch_inst=5, num_return_inst=22,
+        num_edges=240, num_crit_edges=35, num_cond_br=95, num_uncond_br=25,
+        num_mult=120, num_div=45, num_shift=35, num_and_or=40, num_xor=15,
+        avg_args_per_func=3.8, std_args_per_func=1.5, loop_depth=2, num_loops=10
+    ))
+    
+    programs.append(ProgramCharacteristics(
+        name="cpp_polymorphism", language="cpp", num_functions=35, num_basic_blocks=150, num_instructions=1800,
+        num_load_inst=350, num_store_inst=120, num_branch_inst=90, num_call_inst=110,
+        num_binary_ops=220, num_unary_ops=20, num_int_inst=450, num_float_inst=50,
+        num_gep_inst=280, num_phi_nodes=70, num_alloca_inst=45, num_icmp_inst=65,
+        num_fcmp_inst=5, num_select_inst=8, num_switch_inst=1, num_return_inst=35,
+        num_edges=210, num_crit_edges=30, num_cond_br=70, num_uncond_br=20,
+        num_mult=40, num_div=5, num_shift=10, num_and_or=15, num_xor=2,
+        avg_args_per_func=2.5, std_args_per_func=1.0, loop_depth=1, num_loops=4
+    ))
+    
+    programs.append(ProgramCharacteristics(
+        name="cpp_template_metaprog", language="cpp", num_functions=45, num_basic_blocks=220, num_instructions=2800,
+        num_load_inst=550, num_store_inst=280, num_branch_inst=140, num_call_inst=150,
+        num_binary_ops=400, num_unary_ops=30, num_int_inst=800, num_float_inst=0,
+        num_gep_inst=350, num_phi_nodes=110, num_alloca_inst=80, num_icmp_inst=110,
+        num_fcmp_inst=0, num_select_inst=20, num_switch_inst=3, num_return_inst=45,
+        num_edges=310, num_crit_edges=45, num_cond_br=110, num_uncond_br=30,
+        num_mult=150, num_div=20, num_shift=50, num_and_or=60, num_xor=10,
+        avg_args_per_func=3.2, std_args_per_func=1.8, loop_depth=3, num_loops=12
+    ))
+    
+    programs.append(ProgramCharacteristics(
+        name="cpp_regex", language="cpp", num_functions=18, num_basic_blocks=250, num_instructions=2400,
+        num_load_inst=400, num_store_inst=180, num_branch_inst=160, num_call_inst=60,
+        num_binary_ops=350, num_unary_ops=20, num_int_inst=700, num_float_inst=0,
+        num_gep_inst=220, num_phi_nodes=130, num_alloca_inst=50, num_icmp_inst=140,
+        num_fcmp_inst=0, num_select_inst=30, num_switch_inst=15, num_return_inst=18,
+        num_edges=360, num_crit_edges=60, num_cond_br=130, num_uncond_br=30,
+        num_mult=60, num_div=10, num_shift=25, num_and_or=80, num_xor=5,
+        avg_args_per_func=4.0, std_args_per_func=1.5, loop_depth=4, num_loops=15
+    ))
+
+    return programs
+
+def create_python_programs() -> List[ProgramCharacteristics]:
+    """
+    Simulate LLVM IR characteristics typical of Python (via JIT/Numba).
+    These have extremely high branching (type checks), dictionary lookups, and dynamic dispatch.
+    """
+    programs = []
+    
+    programs.append(ProgramCharacteristics(
+        name="py_json_parser", language="python", num_functions=8, num_basic_blocks=350, num_instructions=3800,
+        num_load_inst=800, num_store_inst=400, num_branch_inst=300, num_call_inst=180,
+        num_binary_ops=450, num_unary_ops=40, num_int_inst=1200, num_float_inst=50,
+        num_gep_inst=600, num_phi_nodes=220, num_alloca_inst=100, num_icmp_inst=280,
+        num_fcmp_inst=10, num_select_inst=40, num_switch_inst=25, num_return_inst=8,
+        num_edges=520, num_crit_edges=90, num_cond_br=250, num_uncond_br=50,
+        num_mult=80, num_div=20, num_shift=40, num_and_or=110, num_xor=15,
+        avg_args_per_func=5.5, std_args_per_func=2.5, loop_depth=3, num_loops=12
+    ))
+
+    programs.append(ProgramCharacteristics(
+        name="py_data_pipeline", language="python", num_functions=12, num_basic_blocks=420, num_instructions=4500,
+        num_load_inst=950, num_store_inst=480, num_branch_inst=350, num_call_inst=220,
+        num_binary_ops=520, num_unary_ops=50, num_int_inst=1500, num_float_inst=300,
+        num_gep_inst=750, num_phi_nodes=280, num_alloca_inst=120, num_icmp_inst=320,
+        num_fcmp_inst=80, num_select_inst=50, num_switch_inst=30, num_return_inst=12,
+        num_edges=640, num_crit_edges=110, num_cond_br=290, num_uncond_br=60,
+        num_mult=150, num_div=50, num_shift=30, num_and_or=140, num_xor=10,
+        avg_args_per_func=4.0, std_args_per_func=2.0, loop_depth=4, num_loops=18
+    ))
+    
+    programs.append(ProgramCharacteristics(
+        name="py_ml_inference", language="python", num_functions=6, num_basic_blocks=280, num_instructions=3100,
+        num_load_inst=650, num_store_inst=320, num_branch_inst=220, num_call_inst=140,
+        num_binary_ops=480, num_unary_ops=35, num_int_inst=800, num_float_inst=600,
+        num_gep_inst=450, num_phi_nodes=180, num_alloca_inst=80, num_icmp_inst=180,
+        num_fcmp_inst=150, num_select_inst=35, num_switch_inst=10, num_return_inst=6,
+        num_edges=410, num_crit_edges=70, num_cond_br=180, num_uncond_br=40,
+        num_mult=250, num_div=80, num_shift=20, num_and_or=70, num_xor=5,
+        avg_args_per_func=3.5, std_args_per_func=1.2, loop_depth=5, num_loops=25
+    ))
+
+    programs.append(ProgramCharacteristics(
+        name="py_web_router", language="python", num_functions=25, num_basic_blocks=500, num_instructions=5200,
+        num_load_inst=1100, num_store_inst=550, num_branch_inst=420, num_call_inst=350,
+        num_binary_ops=550, num_unary_ops=60, num_int_inst=1800, num_float_inst=10,
+        num_gep_inst=850, num_phi_nodes=320, num_alloca_inst=180, num_icmp_inst=380,
+        num_fcmp_inst=0, num_select_inst=60, num_switch_inst=45, num_return_inst=25,
+        num_edges=780, num_crit_edges=140, num_cond_br=350, num_uncond_br=70,
+        num_mult=90, num_div=15, num_shift=50, num_and_or=180, num_xor=20,
+        avg_args_per_func=2.8, std_args_per_func=1.5, loop_depth=2, num_loops=8
+    ))
+    
+    programs.append(ProgramCharacteristics(
+        name="py_string_manip", language="python", num_functions=10, num_basic_blocks=320, num_instructions=3400,
+        num_load_inst=700, num_store_inst=350, num_branch_inst=280, num_call_inst=200,
+        num_binary_ops=400, num_unary_ops=45, num_int_inst=1300, num_float_inst=0,
+        num_gep_inst=550, num_phi_nodes=200, num_alloca_inst=90, num_icmp_inst=250,
+        num_fcmp_inst=0, num_select_inst=45, num_switch_inst=20, num_return_inst=10,
+        num_edges=480, num_crit_edges=85, num_cond_br=230, num_uncond_br=50,
+        num_mult=60, num_div=25, num_shift=45, num_and_or=130, num_xor=12,
+        avg_args_per_func=3.2, std_args_per_func=1.8, loop_depth=3, num_loops=15
+    ))
+
+    return programs
+
+
 def generate_dataset(config_path: str = "config/config.yaml"):
     """
     Generate the complete dataset for training and evaluation.
@@ -399,8 +528,11 @@ def generate_dataset(config_path: str = "config/config.yaml"):
 
     # Step 1: Create benchmark programs
     logger.info("Step 1: Creating benchmark program characteristics...")
-    programs = create_polybench_programs()
-    logger.info(f"  Created {len(programs)} benchmark programs")
+    c_programs = create_polybench_programs()
+    cpp_programs = create_cpp_programs()
+    py_programs = create_python_programs()
+    programs = c_programs + cpp_programs + py_programs
+    logger.info(f"  Created {len(programs)} benchmark programs (C: {len(c_programs)}, C++: {len(cpp_programs)}, Python: {len(py_programs)})")
 
     # Step 2: Extract features
     logger.info("Step 2: Extracting features (Autophase + CFG)...")
@@ -463,15 +595,15 @@ def generate_dataset(config_path: str = "config/config.yaml"):
         X_augmented.append(X[i])
         y_augmented.append(y[i])
 
-        # Add 2 noisy copies
-        for _ in range(2):
+        # Add 10 noisy copies for intense training dataset scaling
+        for _ in range(10):
             noise = rng.normal(0, 0.02, size=X[i].shape)
             noisy_sample = X[i] + noise
-            # Re-normalize priority vector (last 3 dims)
-            pri = noisy_sample[-3:]
+            # Re-normalize priority vector (last 4 dims)
+            pri = noisy_sample[-4:]
             pri = np.clip(pri, 0.01, 1.0)
             pri = pri / pri.sum()
-            noisy_sample[-3:] = pri
+            noisy_sample[-4:] = pri
             X_augmented.append(noisy_sample)
             y_augmented.append(y[i])
 

@@ -17,17 +17,17 @@ paths:
   features_dir: "data/features"
   labels_dir: "data/labels"
   processed_dir: "data/processed"
-  results_dir: "results"
-  figures_dir: "results/figures"
-  tables_dir: "results/tables"
-  logs_dir: "results/logs"
-  models_dir: "results/models"
+  results_dir: "result_2"
+  figures_dir: "result_2/figures"
+  tables_dir: "result_2/tables"
+  logs_dir: "result_2/logs"
+  models_dir: "result_2/models"
 
 features:
   autophase_dim: 56
-  cfg_features_dim: 10
-  priority_vector_dim: 3
-  total_feature_dim: 69  # 56 + 10 + 3
+  graph_features_dim: 32
+  priority_vector_dim: 4
+  total_feature_dim: 95  # 56 + 32 + 3 (language) + 4
 
 dataset:
   num_benchmarks: 30
@@ -40,7 +40,7 @@ dataset:
 
 models:
   random_forest:
-    n_estimators: 300
+    n_estimators: 1000
     max_depth: 20
     min_samples_split: 5
     min_samples_leaf: 2
@@ -50,7 +50,7 @@ models:
     cv_folds: 5
 
   xgboost:
-    n_estimators: 500
+    n_estimators: 1000
     max_depth: 8
     learning_rate: 0.05
     subsample: 0.8
@@ -67,8 +67,8 @@ models:
     batch_norm: true
     learning_rate: 0.001
     batch_size: 32
-    max_epochs: 200
-    patience: 20
+    max_epochs: 500
+    patience: 50
     weight_decay: 0.0001
     activation: "relu"
     optimizer: "adam"
@@ -88,11 +88,13 @@ evaluation:
   num_bootstrap_samples: 1000
 
 priority_presets:
-  speed_first: [0.7, 0.2, 0.1]
-  size_first: [0.2, 0.7, 0.1]
-  balanced: [0.34, 0.33, 0.33]
-  energy_efficient: [0.3, 0.3, 0.4]
-  compile_fast: [0.1, 0.1, 0.8]
+  speed_first: [0.7, 0.2, 0.1, 0.0]
+  size_first: [0.2, 0.7, 0.1, 0.0]
+  balanced: [0.25, 0.25, 0.25, 0.25]
+  energy_efficient: [0.3, 0.3, 0.3, 0.1]
+  compile_fast: [0.1, 0.1, 0.7, 0.1]
+  secure_enclave: [0.10, 0.10, 0.05, 0.75]
+  crypto_fast: [0.40, 0.10, 0.10, 0.40]
 
 llvm_passes:
   # 50 common LLVM optimization passes

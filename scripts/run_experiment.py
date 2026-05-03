@@ -300,11 +300,11 @@ def run_experiment(config_path: str = "config/config.yaml"):
     try:
         importances = rf_model.get_feature_importances()
         feat_names = feature_extractor.get_all_feature_names() + \
-                     ['priority_speed', 'priority_size', 'priority_compile']
+                     ['priority_speed', 'priority_size', 'priority_compile', 'priority_security']
         feat_plotter.plot_feature_importance(importances, feat_names, top_n=20)
 
         groups = feature_extractor.get_feature_importance_groups()
-        groups['Priority_Vector'] = [66, 67, 68]
+        groups['Priority_Vector'] = [91, 92, 93, 94]
         feat_plotter.plot_feature_group_importance(importances, groups)
     except Exception as e:
         logger.warning(f"Could not plot feature importance: {e}")

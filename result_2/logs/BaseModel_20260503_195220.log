@@ -1,0 +1,6 @@
+2026-05-03 19:53:11,046 | BaseModel | INFO | evaluate:132 | [Random Forest] Accuracy=0.9461, F1-macro=0.9064, F1-weighted=0.9458
+2026-05-03 19:53:11,406 | BaseModel | INFO | evaluate:132 | [XGBoost] Accuracy=0.9461, F1-macro=0.9304, F1-weighted=0.9458
+2026-05-03 19:53:11,487 | BaseModel | INFO | evaluate:132 | [Deep Neural Network] Accuracy=0.9559, F1-macro=0.8868, F1-weighted=0.9547
+2026-05-03 19:53:11,887 | BaseModel | INFO | evaluate:132 | [Ensemble (RF+XGB+DNN)] Accuracy=0.9608, F1-macro=0.8908, F1-weighted=0.9597
+2026-05-03 19:53:11,922 | BaseModel | INFO | evaluate:132 | [Base Paper (decision_tree)] Accuracy=0.8725, F1-macro=0.7966, F1-weighted=0.8740
+2026-05-03 19:53:11,988 | BaseModel | INFO | evaluate:132 | [Base Paper (knn)] Accuracy=0.9069, F1-macro=0.8605, F1-weighted=0.9062

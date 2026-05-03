@@ -1,9 +1,9 @@
 """
 Unified IR Feature Extractor.
 
-Combines Autophase 56-dim features + CFG 10-dim features into a single
-66-dimension feature vector for each program, OR uses NLP embeddings (768-dim),
-OR a hybrid of both (834-dim). When combined with the 3-dim Priority Vector, 
+Combines Autophase 56-dim features + Graph Embedding 32-dim features + 3-dim Language 
+into a single 91-dimension feature vector for each program, OR uses NLP embeddings (768-dim),
+OR a hybrid of both (859-dim). When combined with the 4-dim Priority Vector, 
 produces the final input for ML models.
 
 This module serves as the main entry point for feature extraction.
@@ -12,7 +12,7 @@ import numpy as np
 from typing import List, Dict, Optional, Tuple
 
 from src.feature_extraction.autophase_features import AutophaseFeatureExtractor, ProgramCharacteristics
-from src.feature_extraction.cfg_analyzer import CFGAnalyzer
+from src.feature_extraction.graph_feature_extractor import GraphFeatureExtractor
 from src.utils.logger import setup_logger
 
 logger = setup_logger("IRFeatureExtractor")
@@ -22,9 +22,9 @@ class IRFeatureExtractor:
     """
     Main feature extraction pipeline supporting multiple modes.
     Modes:
-      - 'manual': 56 Autophase + 10 CFG = 66 dims
+      - 'manual': 56 Autophase + 32 Graph + 3 Language = 91 dims
       - 'nlp': 768 CodeBERT dims
-      - 'hybrid': 66 + 768 = 834 dims
+      - 'hybrid': 91 + 768 = 859 dims
     """
 
     def __init__(self, mode: str = "manual", normalize: bool = True):
@@ -46,10 +46,10 @@ class IRFeatureExtractor:
         
         if self.mode in ["manual", "hybrid"]:
             self.autophase_extractor = AutophaseFeatureExtractor()
-            self.cfg_analyzer = CFGAnalyzer()
+            self.graph_extractor = GraphFeatureExtractor()
             self.autophase_dim = self.autophase_extractor.num_features  # 56
-            self.cfg_dim = self.cfg_analyzer.num_features               # 10
-            self.manual_dim = self.autophase_dim + self.cfg_dim         # 66
+            self.graph_dim = self.graph_extractor.dim                   # 32
+            self.manual_dim = self.autophase_dim + self.graph_dim + 3   # 91
             self.total_dim += self.manual_dim
             
         if self.mode in ["nlp", "hybrid"]:
@@ -69,9 +69,19 @@ class IRFeatureExtractor:
         
         if self.mode in ["manual", "hybrid"]:
             autophase = self.autophase_extractor.extract(program)
-            cfg = self.cfg_analyzer.analyze(program)
+            graph_emb = self.graph_extractor.extract(program)
+            
+            lang_emb = np.zeros(3)
+            if program.language == "c":
+                lang_emb[0] = 1.0
+            elif program.language == "cpp":
+                lang_emb[1] = 1.0
+            elif program.language == "python":
+                lang_emb[2] = 1.0
+                
             features.append(autophase)
-            features.append(cfg)
+            features.append(graph_emb)
+            features.append(lang_emb)
             
         if self.mode in ["nlp", "hybrid"]:
             nlp_emb = self.nlp_extractor.extract(program)
@@ -93,7 +103,16 @@ class IRFeatureExtractor:
             prog_features = []
             if self.mode in ["manual", "hybrid"]:
                 prog_features.append(self.autophase_extractor.extract(prog))
-                prog_features.append(self.cfg_analyzer.analyze(prog))
+                prog_features.append(self.graph_extractor.extract(prog))
+                
+                lang_emb = np.zeros(3)
+                if prog.language == "c":
+                    lang_emb[0] = 1.0
+                elif prog.language == "cpp":
+                    lang_emb[1] = 1.0
+                elif prog.language == "python":
+                    lang_emb[2] = 1.0
+                prog_features.append(lang_emb)
             if self.mode in ["nlp", "hybrid"]:
                 prog_features.append(nlp_features[i])
                 
@@ -128,7 +147,8 @@ class IRFeatureExtractor:
         names = []
         if self.mode in ["manual", "hybrid"]:
             names.extend(self.autophase_extractor.get_feature_names())
-            names.extend(self.cfg_analyzer.get_feature_names())
+            names.extend(self.graph_extractor.get_feature_names())
+            names.extend(["is_c", "is_cpp", "is_python"])
         if self.mode in ["nlp", "hybrid"]:
             names.extend(self.nlp_extractor.get_feature_names())
         return names
@@ -145,9 +165,10 @@ class IRFeatureExtractor:
                 "Graph_Structure": list(range(30, 32)),
                 "Instruction_Types": list(range(32, 54)),
                 "Phi_Ratios": list(range(54, 56)),
-                "CFG_Metrics": list(range(56, 66)),
+                "Graph_Embeddings": list(range(56, 56 + self.graph_dim)),
+                "Language": list(range(56 + self.graph_dim, 56 + self.graph_dim + 3)),
             })
-            offset = 66
+            offset = 56 + self.graph_dim + 3
             
         if self.mode in ["nlp", "hybrid"]:
             groups["NLP_Embeddings"] = list(range(offset, offset + 768))

@@ -29,9 +29,19 @@
     "syr2k",
     "syrk",
     "trmm",
-    "matrix_multiply"
+    "matrix_multiply",
+    "cpp_vector_sort",
+    "cpp_hash_map",
+    "cpp_polymorphism",
+    "cpp_template_metaprog",
+    "cpp_regex",
+    "py_json_parser",
+    "py_data_pipeline",
+    "py_ml_inference",
+    "py_web_router",
+    "py_string_manip"
   ],
-  "num_programs": 30,
-  "feature_dim": 69,
+  "num_programs": 40,
+  "feature_dim": 95,
   "num_classes": 10
 }

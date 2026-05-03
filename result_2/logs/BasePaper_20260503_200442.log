@@ -1,0 +1,4 @@
+2026-05-03 20:05:43,099 | BasePaper | INFO | train:67 | Training Base Paper (decision_tree) on 1260 samples
+2026-05-03 20:05:43,331 | BasePaper | INFO | train:93 | Training complete in 0.2280s
+2026-05-03 20:05:43,331 | BasePaper | INFO | train:67 | Training Base Paper (knn) on 1260 samples
+2026-05-03 20:05:43,475 | BasePaper | INFO | train:93 | Training complete in 0.0014s

@@ -80,6 +80,7 @@ AUTOPHASE_FEATURE_NAMES = [
 class ProgramCharacteristics:
     """Stores structural characteristics of a program for feature extraction."""
     name: str
+    language: str = "c"
     num_functions: int = 1
     num_basic_blocks: int = 10
     num_instructions: int = 100

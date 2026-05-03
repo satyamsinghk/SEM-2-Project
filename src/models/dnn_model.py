@@ -31,14 +31,14 @@ class DNNOptimizer(BaseModel):
     trained with Adam optimizer and learning rate scheduling.
     """
 
-    def __init__(self, num_classes: int = 10, input_dim: int = 69,
+    def __init__(self, num_classes: int = 10, input_dim: int = 95,
                  config: Optional[Dict] = None):
         """
         Initialize DNN model.
 
         Args:
             num_classes: Number of optimization classes
-            input_dim: Input feature dimension (66 + 3 priority = 69)
+            input_dim: Input feature dimension (56 + 32 + 3 + 4 = 95)
             config: Hyperparameter configuration
         """
         super().__init__("Deep Neural Network", num_classes)

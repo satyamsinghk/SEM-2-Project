@@ -83,6 +83,21 @@ class PassEvaluator:
             "hpc_scientific": (4.0, 6.5),
         }
 
+        # Security preservation multipliers (proxy for constant-time integrity)
+        # Higher is better. Aggressive/vectorization passes hurt security.
+        self._security_multipliers = {
+            "aggressive_speed": (0.40, 0.60),
+            "size_optimized": (0.80, 0.95),
+            "balanced": (0.70, 0.85),
+            "loop_intensive": (0.30, 0.50),
+            "memory_optimized": (0.60, 0.80),
+            "fast_compile": (0.90, 1.00),
+            "interprocedural": (0.50, 0.70),
+            "vectorization_focus": (0.20, 0.40),
+            "embedded_iot": (0.85, 0.95),
+            "hpc_scientific": (0.30, 0.55),
+        }
+
     def evaluate(self, program: ProgramCharacteristics,
                  pass_sequence: PassSequence,
                  priority: Optional[np.ndarray] = None) -> Dict[str, float]:
@@ -92,7 +107,7 @@ class PassEvaluator:
         Args:
             program: Program characteristics
             pass_sequence: Optimization pass sequence
-            priority: User priority vector [speed, size, compile_time]
+            priority: User priority vector [speed, size, compile_time, security]
 
         Returns:
             Dictionary with performance metrics
@@ -123,30 +138,50 @@ class PassEvaluator:
         size_range = self._size_multipliers[category]
         size_ratio = rng.uniform(*size_range)
 
+        # Language-specific optimization characteristics
+        if hasattr(program, "language"):
+            if program.language == "cpp" and "interprocedural" in category:
+                base_speedup *= 1.25  # C++ heavily benefits from inlining and devirtualization
+                size_ratio *= 0.95
+            elif program.language == "python" and "balanced" in category:
+                base_speedup *= 1.30  # Python JIT benefits from jump-threading and simplifycfg
+            elif program.language == "python" and ("vectorization" in category or "loop" in category):
+                base_speedup *= 0.85  # Highly dynamic typing in Python makes vectorization less effective
+
         # Compilation time multiplier (vs -O0)
         compile_range = self._compile_multipliers[category]
         compile_time = rng.uniform(*compile_range)
 
+        # Security preservation proxy
+        security_range = self._security_multipliers[category]
+        base_security = rng.uniform(*security_range)
+        if program.num_branch_inst > program.num_instructions * 0.2:
+            base_security *= 0.9
+
         # Compute composite score based on priority
         if priority is None:
-            priority = np.array([0.34, 0.33, 0.33])
+            priority = np.array([0.25, 0.25, 0.25, 0.25])
 
         # Normalize metrics to [0, 1] range for scoring
         speed_score = min(1.0, base_speedup / 1.5)
         size_score = 1.0 - min(1.0, size_ratio / 1.5)
         compile_score = 1.0 - min(1.0, compile_time / 7.0)
+        security_score = min(1.0, base_security)
 
         composite_score = (priority[0] * speed_score +
                           priority[1] * size_score +
-                          priority[2] * compile_score)
+                          priority[2] * compile_score +
+                          priority[3] * security_score)
 
         return {
             "speedup": round(base_speedup, 4),
             "size_ratio": round(size_ratio, 4),
             "compile_time_ratio": round(compile_time, 4),
+            "security": round(base_security, 4),
             "speed_score": round(speed_score, 4),
             "size_score": round(size_score, 4),
             "compile_score": round(compile_score, 4),
+            "security_score": round(security_score, 4),
             "composite_score": round(composite_score, 4),
             "pass_sequence_id": pass_sequence.id,
             "category": category,

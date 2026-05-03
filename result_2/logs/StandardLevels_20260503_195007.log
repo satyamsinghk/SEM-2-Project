@@ -1,0 +1,4 @@
+2026-05-03 19:51:06,039 | StandardLevels | INFO | evaluate_all_levels:64 | -O0: avg_speedup=1.0000 ± 0.0000
+2026-05-03 19:51:06,117 | StandardLevels | INFO | evaluate_all_levels:64 | -O1: avg_speedup=1.1205 ± 0.0449
+2026-05-03 19:51:06,154 | StandardLevels | INFO | evaluate_all_levels:64 | -O2: avg_speedup=1.2519 ± 0.0664
+2026-05-03 19:51:06,187 | StandardLevels | INFO | evaluate_all_levels:64 | -O3: avg_speedup=1.3032 ± 0.0532

@@ -1,0 +1,6 @@
+2026-05-03 20:15:17,967 | PerformancePlots | INFO | plot_model_comparison_radar:101 | Saved: results/figures/model_radar_comparison.png
+2026-05-03 20:15:18,901 | PerformancePlots | INFO | plot_speedup_comparison:69 | Saved: results/figures/speedup_comparison.png
+2026-05-03 20:15:21,072 | PerformancePlots | INFO | plot_confusion_matrix:120 | Saved: results/figures/confusion_matrix_random_forest.png
+2026-05-03 20:15:22,719 | PerformancePlots | INFO | plot_confusion_matrix:120 | Saved: results/figures/confusion_matrix_ensemble.png
+2026-05-03 20:15:29,060 | PerformancePlots | INFO | plot_per_benchmark_speedup:213 | Saved: results/figures/per_benchmark_speedup.png
+2026-05-03 20:15:30,168 | PerformancePlots | INFO | plot_compilation_overhead:183 | Saved: results/figures/compilation_overhead.png

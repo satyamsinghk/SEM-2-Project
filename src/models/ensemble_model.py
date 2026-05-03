@@ -33,7 +33,7 @@ class EnsembleOptimizer(BaseModel):
     strengths of each constituent model.
     """
 
-    def __init__(self, num_classes: int = 10, input_dim: int = 69,
+    def __init__(self, num_classes: int = 10, input_dim: int = 95,
                  rf_config: Optional[Dict] = None,
                  xgb_config: Optional[Dict] = None,
                  dnn_config: Optional[Dict] = None):

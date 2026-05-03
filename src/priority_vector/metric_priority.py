@@ -5,13 +5,13 @@ This is one of the NOVEL CONTRIBUTIONS of this project. The priority vector
 enables users to specify their optimization preferences, allowing the ML model
 to adapt its predictions based on what the user values most.
 
-The priority vector is a 3-dimensional normalized vector:
-    [speed_weight, code_size_weight, compile_time_weight]
+The priority vector is a 4-dimensional normalized vector:
+    [speed_weight, code_size_weight, compile_time_weight, security_weight]
 
 where sum = 1.0 and each element ∈ [0, 1].
 
-The priority vector is appended to the 66-dim feature vector, creating a
-69-dim input to the ML models. This allows the SAME trained model to
+The priority vector is appended to the base feature vector, creating an augmented
+input to the ML models. This allows the SAME trained model to
 produce DIFFERENT optimization recommendations based on user priorities.
 
 References:
@@ -29,17 +29,19 @@ logger = setup_logger("MetricPriority")
 
 # Predefined priority presets
 PRIORITY_PRESETS = {
-    "speed_first": np.array([0.70, 0.20, 0.10]),
-    "size_first": np.array([0.20, 0.70, 0.10]),
-    "balanced": np.array([0.34, 0.33, 0.33]),
-    "energy_efficient": np.array([0.30, 0.30, 0.40]),
-    "compile_fast": np.array([0.10, 0.10, 0.80]),
-    "speed_and_size": np.array([0.45, 0.45, 0.10]),
-    "embedded": np.array([0.25, 0.60, 0.15]),
-    "hpc": np.array([0.80, 0.10, 0.10]),
+    "speed_first": np.array([0.70, 0.20, 0.10, 0.0]),
+    "size_first": np.array([0.20, 0.70, 0.10, 0.0]),
+    "balanced": np.array([0.25, 0.25, 0.25, 0.25]),
+    "energy_efficient": np.array([0.30, 0.30, 0.30, 0.10]),
+    "compile_fast": np.array([0.10, 0.10, 0.70, 0.10]),
+    "speed_and_size": np.array([0.45, 0.45, 0.10, 0.0]),
+    "embedded": np.array([0.25, 0.50, 0.10, 0.15]),
+    "hpc": np.array([0.80, 0.10, 0.10, 0.0]),
+    "secure_enclave": np.array([0.10, 0.10, 0.05, 0.75]),
+    "crypto_fast": np.array([0.40, 0.10, 0.10, 0.40]),
 }
 
-METRIC_NAMES = ["execution_speed", "code_size", "compilation_time"]
+METRIC_NAMES = ["execution_speed", "code_size", "compilation_time", "security"]
 
 
 @dataclass
@@ -49,11 +51,12 @@ class PriorityProfile:
     speed_weight: float
     size_weight: float
     compile_time_weight: float
+    security_weight: float = 0.0
     description: str = ""
 
     @property
     def vector(self) -> np.ndarray:
-        return np.array([self.speed_weight, self.size_weight, self.compile_time_weight])
+        return np.array([self.speed_weight, self.size_weight, self.compile_time_weight, self.security_weight])
 
     def validate(self) -> bool:
         v = self.vector
@@ -65,7 +68,7 @@ class MetricPriorityVector:
     Manages the Metric Priority Vector system for preference-aware optimization.
 
     This system allows users to express their optimization preferences as a
-    normalized 3D vector, which is then used as additional input features
+    normalized 4D vector, which is then used as additional input features
     for the ML models, enabling the same model to produce different
     optimization strategies based on user needs.
     """
@@ -77,7 +80,7 @@ class MetricPriorityVector:
         self.dim = len(METRIC_NAMES)
         logger.info(f"Initialized MetricPriorityVector with {len(self.presets)} presets")
 
-    def create_vector(self, speed: float, size: float, compile_time: float) -> np.ndarray:
+    def create_vector(self, speed: float, size: float, compile_time: float, security: float = 0.0) -> np.ndarray:
         """
         Create a normalized priority vector from raw weights.
 
@@ -85,14 +88,15 @@ class MetricPriorityVector:
             speed: Weight for execution speed optimization
             size: Weight for code size reduction
             compile_time: Weight for compilation time minimization
+            security: Weight for security/constant-time preservation
 
         Returns:
-            Normalized priority vector of shape (3,)
+            Normalized priority vector of shape (4,)
 
         Raises:
             ValueError: If all weights are zero or negative
         """
-        raw = np.array([speed, size, compile_time], dtype=np.float64)
+        raw = np.array([speed, size, compile_time, security], dtype=np.float64)
 
         if np.any(raw < 0):
             raise ValueError("Priority weights must be non-negative")
@@ -103,7 +107,8 @@ class MetricPriorityVector:
 
         normalized = raw / total
         logger.debug(f"Created priority vector: speed={normalized[0]:.3f}, "
-                     f"size={normalized[1]:.3f}, compile_time={normalized[2]:.3f}")
+                     f"size={normalized[1]:.3f}, compile_time={normalized[2]:.3f}, "
+                     f"security={normalized[3]:.3f}")
         return normalized
 
     def get_preset(self, name: str) -> np.ndarray:
@@ -114,7 +119,7 @@ class MetricPriorityVector:
             name: Preset name (e.g., "speed_first", "balanced")
 
         Returns:
-            Priority vector of shape (3,)
+            Priority vector of shape (4,)
         """
         if name not in self.presets:
             available = ", ".join(self.presets.keys())
@@ -131,7 +136,7 @@ class MetricPriorityVector:
             strategy: Generation strategy - "mixed", "uniform", "preset_focused"
 
         Returns:
-            numpy array of shape (num_samples, 3)
+            numpy array of shape (num_samples, 4)
         """
         rng = np.random.RandomState(42)
         priorities = np.zeros((num_samples, self.dim))
@@ -187,11 +192,11 @@ class MetricPriorityVector:
         Append priority vector to feature vectors.
 
         Args:
-            features: Feature matrix of shape (N, 66) or (66,)
-            priority: Priority vector of shape (3,)
+            features: Feature matrix of shape (N, feature_dim) or (feature_dim,)
+            priority: Priority vector of shape (4,)
 
         Returns:
-            Augmented features of shape (N, 69) or (69,)
+            Augmented features of shape (N, feature_dim+4) or (feature_dim+4,)
         """
         if features.ndim == 1:
             return np.concatenate([features, priority])
@@ -206,11 +211,11 @@ class MetricPriorityVector:
         Append different priority vectors to each feature vector.
 
         Args:
-            features: Feature matrix of shape (N, 66)
-            priorities: Priority matrix of shape (N, 3)
+            features: Feature matrix of shape (N, feature_dim)
+            priorities: Priority matrix of shape (N, 4)
 
         Returns:
-            Augmented features of shape (N, 69)
+            Augmented features of shape (N, feature_dim+4)
         """
         assert features.shape[0] == priorities.shape[0], \
             f"Shape mismatch: features={features.shape[0]}, priorities={priorities.shape[0]}"

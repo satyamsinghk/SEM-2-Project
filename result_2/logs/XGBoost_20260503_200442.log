@@ -1,0 +1,2 @@
+2026-05-03 20:05:10,581 | XGBoost | WARNING | train:77 | XGBoost native library not available, using sklearn GradientBoosting fallback
+2026-05-03 20:05:37,581 | XGBoost | WARNING | train:77 | XGBoost native library not available, using sklearn GradientBoosting fallback
