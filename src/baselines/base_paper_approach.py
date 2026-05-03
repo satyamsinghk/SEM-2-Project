@@ -67,8 +67,8 @@ class BasePaperApproach(BaseModel):
         logger.info(f"Training Base Paper ({self.method}) on {X_train.shape[0]} samples")
         start = time.time()
 
-        # Remove priority vector (last 3 features) to match base paper
-        X_train_base = X_train[:, :-3] if X_train.shape[1] > 66 else X_train
+        # Pass full features including priority to allow fair baseline evaluation
+        X_train_base = X_train
 
         self.model.fit(X_train_base, y_train)
         self.training_time = time.time() - start
@@ -77,7 +77,7 @@ class BasePaperApproach(BaseModel):
         val_accuracy = None
         val_f1 = None
         if X_val is not None and y_val is not None:
-            X_val_base = X_val[:, :-3] if X_val.shape[1] > 66 else X_val
+            X_val_base = X_val
             val_pred = self.model.predict(X_val_base)
             val_accuracy = accuracy_score(y_val, val_pred)
             val_f1 = f1_score(y_val, val_pred, average='macro', zero_division=0)
@@ -87,7 +87,7 @@ class BasePaperApproach(BaseModel):
             "val_accuracy": val_accuracy,
             "val_f1": val_f1,
             "method": self.method,
-            "note": "Single-objective (speed only), no priority vector",
+            "note": "Preference-Aware Baseline Approximation",
         }
 
         logger.info(f"Training complete in {self.training_time:.4f}s")
@@ -97,12 +97,12 @@ class BasePaperApproach(BaseModel):
         """Predict (strips priority vector to match base paper)."""
         if not self.is_trained:
             raise RuntimeError("Model not trained")
-        X_base = X[:, :-3] if X.shape[1] > 66 else X
+        X_base = X
         return self.model.predict(X_base)
 
     def evaluate(self, X_test: np.ndarray, y_test: np.ndarray) -> Dict:
         """Evaluate with base paper's simpler approach."""
         results = super().evaluate(X_test, y_test)
-        results['approach'] = 'Base Paper (Wang & O\'Boyle 2018)'
-        results['limitation'] = 'Single-objective, no preference awareness'
+        results['approach'] = 'Base Paper (Wang & O\'Boyle 2018) + Priority'
+        results['limitation'] = 'Inferior Architecture (Decision Tree/KNN)'
         return results

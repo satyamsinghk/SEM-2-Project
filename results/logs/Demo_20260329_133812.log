@@ -1,0 +1,23 @@
+2026-03-29 13:38:12,424 | Demo | INFO | run_demo:78 | ============================================================
+2026-03-29 13:38:12,424 | Demo | INFO | run_demo:79 |   ML PREDICTIVE COMPILER OPTIMIZATION DEMO
+2026-03-29 13:38:12,424 | Demo | INFO | run_demo:80 | ============================================================
+2026-03-29 13:38:12,425 | Demo | INFO | run_demo:83 | Using default inline Matrix Multiplication sample.
+2026-03-29 13:38:12,425 | Demo | INFO | run_demo:88 | Selected Priority Profile: 'SPEED_FIRST'
+2026-03-29 13:38:12,426 | Demo | INFO | run_demo:91 | 
+[1/4] Bootstrapping Training Data & Models (Fast cache load)...
+2026-03-29 13:38:14,782 | Demo | INFO | run_demo:94 | Training best models (DNN & ExtraTrees) on cached dataset...
+2026-03-29 13:38:33,033 | Demo | INFO | run_demo:112 | 
+[2/4] Extracting LLVM IR Features for sample.c...
+2026-03-29 13:38:33,035 | Demo | INFO | run_demo:126 | 
+[3/4] Predicting Optimal Pass Sequence...
+2026-03-29 13:38:33,260 | Demo | INFO | run_demo:134 | Prediction complete in 225.29 ms
+2026-03-29 13:38:33,260 | Demo | INFO | run_demo:135 | Predicted Class ID: 0
+2026-03-29 13:38:33,260 | Demo | INFO | run_demo:136 | Predicted Optimizer Passes: PassSequence(id=0, cat='aggressive_speed', len=15)
+2026-03-29 13:38:33,261 | Demo | INFO | run_demo:139 | 
+[4/4] Compiling and Benchmarking (ML Sequence vs Clang -O3)
+2026-03-29 13:38:33,261 | Demo | INFO | run_demo:141 | Compiling with standard -O3...
+2026-03-29 13:38:33,261 | Demo | INFO | run_demo:144 | Compiling with ML Predicted sequence...
+2026-03-29 13:38:33,262 | Demo | INFO | run_demo:148 | 
+============================================================
+2026-03-29 13:38:33,262 | Demo | INFO | run_demo:149 |   FINAL COMPARISON RESULTS
+2026-03-29 13:38:33,262 | Demo | INFO | run_demo:150 | ============================================================

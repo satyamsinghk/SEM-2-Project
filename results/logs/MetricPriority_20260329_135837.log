@@ -1,0 +1,3 @@
+2026-03-29 13:58:40,437 | MetricPriority | INFO | __init__:78 | Initialized MetricPriorityVector with 8 presets
+2026-03-29 13:58:40,457 | MetricPriority | INFO | generate_training_priorities:180 | Generated 15 training priority vectors using 'mixed' strategy
+2026-03-29 13:58:56,685 | MetricPriority | INFO | __init__:78 | Initialized MetricPriorityVector with 8 presets

@@ -134,18 +134,18 @@ class XGBoostOptimizer(BaseModel):
         return self.training_history
 
     def _train_sklearn_fallback(self, X_train, y_train, X_val, y_val):
-        """Fallback to sklearn's GradientBoostingClassifier."""
-        from sklearn.ensemble import GradientBoostingClassifier
+        """Fallback to sklearn's ExtraTreesClassifier for high accuracy without OpenMP crashes."""
+        from sklearn.ensemble import ExtraTreesClassifier
 
         start = time.time()
-        self.model = GradientBoostingClassifier(
-            n_estimators=100, max_depth=5, learning_rate=0.1,
-            subsample=0.8, random_state=42
-        )
+        self.model = ExtraTreesClassifier(n_estimators=500, max_features='log2', 
+                                          min_samples_split=2, min_samples_leaf=1, 
+                                          random_state=42, n_jobs=-1)
         self.model.fit(X_train, y_train)
         self.training_time = time.time() - start
         self.is_trained = True
-        self.feature_importances_ = self.model.feature_importances_
+        # HistGradientBoosting doesn't have feature_importances_
+        self.feature_importances_ = None
 
         val_accuracy = None
         val_f1 = None

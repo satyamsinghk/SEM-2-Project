@@ -44,10 +44,10 @@ class RandomForestOptimizer(BaseModel):
         super().__init__("Random Forest", num_classes)
 
         self.config = config or {
-            'n_estimators': 300,
-            'max_depth': 20,
-            'min_samples_split': 5,
-            'min_samples_leaf': 2,
+            'n_estimators': 600,
+            'max_depth': None,
+            'min_samples_split': 2,
+            'min_samples_leaf': 1,
             'max_features': 'sqrt',
             'random_state': 42,
             'n_jobs': -1,

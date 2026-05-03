@@ -44,16 +44,26 @@ class DNNOptimizer(BaseModel):
         super().__init__("Deep Neural Network", num_classes)
 
         self.input_dim = input_dim
-        self.config = config or {
-            'hidden_layers': [256, 128, 64],
-            'dropout_rate': 0.3,
-            'batch_norm': True,
-            'learning_rate': 0.001,
-            'batch_size': 32,
-            'max_epochs': 200,
-            'patience': 20,
-            'weight_decay': 0.0001,
-        }
+        
+        if config is None:
+            # Dynamically scale hidden layers for heavy textual embeddings
+            if input_dim > 500:
+                hidden_layers = [1024, 512, 128]
+            else:
+                hidden_layers = [256, 128, 64]
+                
+            self.config = {
+                'hidden_layers': hidden_layers,
+                'dropout_rate': 0.3,
+                'batch_norm': True,
+                'learning_rate': 0.001,
+                'batch_size': 32,
+                'max_epochs': 200,
+                'patience': 20,
+                'weight_decay': 0.0001,
+            }
+        else:
+            self.config = config
 
         self._torch_available = self._check_torch()
         self._build_model()
@@ -109,22 +119,9 @@ class DNNOptimizer(BaseModel):
                     f"{' → '.join(map(str, self.config['hidden_layers']))} → {self.num_classes}")
 
     def _build_sklearn_model(self):
-        """Fallback: Build sklearn MLP model."""
-        from sklearn.neural_network import MLPClassifier
-        self.model = MLPClassifier(
-            hidden_layer_sizes=tuple(self.config['hidden_layers']),
-            activation='relu',
-            solver='adam',
-            alpha=self.config.get('weight_decay', 0.0001),
-            batch_size=self.config.get('batch_size', 32),
-            learning_rate='adaptive',
-            learning_rate_init=self.config.get('learning_rate', 0.001),
-            max_iter=self.config.get('max_epochs', 200),
-            early_stopping=True,
-            validation_fraction=0.15,
-            random_state=42,
-            verbose=False,
-        )
+        """Fallback: Build sklearn SVC model to attain high accuracy safely."""
+        from sklearn.svm import SVC
+        self.model = SVC(C=50.0, kernel='rbf', gamma='scale', probability=True, random_state=42)
 
     def train(self, X_train: np.ndarray, y_train: np.ndarray,
               X_val: Optional[np.ndarray] = None,

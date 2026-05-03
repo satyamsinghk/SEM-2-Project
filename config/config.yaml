@@ -12,6 +12,8 @@ project:
 paths:
   data_dir: "data"
   raw_dir: "data/raw"
+  formai_dir: "data/raw/formai"
+  kaggle_dir: "data/raw/kaggle_c_programs"
   features_dir: "data/features"
   labels_dir: "data/labels"
   processed_dir: "data/processed"

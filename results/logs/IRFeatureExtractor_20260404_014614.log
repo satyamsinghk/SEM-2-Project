@@ -1,0 +1,4 @@
+2026-04-04 01:46:21,496 | IRFeatureExtractor | INFO | __init__:61 | Initialized IRFeatureExtractor (mode=manual): Total Configured Dimension=66
+2026-04-04 01:46:21,548 | IRFeatureExtractor | INFO | extract_batch:105 | Extracted features for 30 programs, shape: (30, 66)
+2026-04-04 01:47:07,858 | IRFeatureExtractor | INFO | __init__:61 | Initialized IRFeatureExtractor (mode=manual): Total Configured Dimension=66
+2026-04-04 01:47:07,884 | IRFeatureExtractor | INFO | extract_batch:105 | Extracted features for 30 programs, shape: (30, 66)

@@ -1,0 +1,17 @@
+2026-03-29 12:50:46,762 | Experiment | INFO | run_experiment:66 | ======================================================================
+2026-03-29 12:50:46,763 | Experiment | INFO | run_experiment:67 |   PREDICTIVE & PREFERENCE-AWARE COMPILER OPTIMIZATION EXPERIMENT
+2026-03-29 12:50:46,764 | Experiment | INFO | run_experiment:68 |   M.Tech Project - NIT Tiruchirappalli
+2026-03-29 12:50:46,764 | Experiment | INFO | run_experiment:69 | ======================================================================
+2026-03-29 12:50:46,765 | Experiment | INFO | run_experiment:74 | 
+==================================================
+2026-03-29 12:50:46,765 | Experiment | INFO | run_experiment:75 | PHASE 1: DATASET GENERATION
+2026-03-29 12:50:46,765 | Experiment | INFO | run_experiment:76 | ==================================================
+2026-03-29 12:50:49,765 | Experiment | INFO | run_experiment:79 | Dataset: train=(944, 69), val=(202, 69), test=(204, 69)
+2026-03-29 12:50:49,766 | Experiment | INFO | run_experiment:84 | 
+==================================================
+2026-03-29 12:50:49,766 | Experiment | INFO | run_experiment:85 | PHASE 2: MODEL TRAINING
+2026-03-29 12:50:49,773 | Experiment | INFO | run_experiment:86 | ==================================================
+2026-03-29 12:50:49,775 | Experiment | INFO | run_experiment:89 | 
+--- Random Forest ---
+2026-03-29 12:50:59,205 | Experiment | INFO | run_experiment:94 | 
+--- XGBoost ---

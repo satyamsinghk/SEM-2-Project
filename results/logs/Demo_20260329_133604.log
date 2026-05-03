@@ -1,0 +1,10 @@
+2026-03-29 13:36:04,620 | Demo | INFO | run_demo:78 | ============================================================
+2026-03-29 13:36:04,624 | Demo | INFO | run_demo:79 |   ML PREDICTIVE COMPILER OPTIMIZATION DEMO
+2026-03-29 13:36:04,625 | Demo | INFO | run_demo:80 | ============================================================
+2026-03-29 13:36:04,626 | Demo | INFO | run_demo:83 | Using default inline Matrix Multiplication sample.
+2026-03-29 13:36:04,630 | Demo | INFO | run_demo:88 | Selected Priority Profile: 'SPEED_FIRST'
+2026-03-29 13:36:04,630 | Demo | INFO | run_demo:91 | 
+[1/4] Bootstrapping Training Data & Models (Fast cache load)...
+2026-03-29 13:36:11,794 | Demo | INFO | run_demo:94 | Training best models (DNN & ExtraTrees) on cached dataset...
+2026-03-29 13:36:42,885 | Demo | INFO | run_demo:112 | 
+[2/4] Extracting LLVM IR Features for sample.c...

@@ -1,0 +1,76 @@
+2026-03-29 12:53:39,774 | Experiment | INFO | run_experiment:66 | ======================================================================
+2026-03-29 12:53:39,774 | Experiment | INFO | run_experiment:67 |   PREDICTIVE & PREFERENCE-AWARE COMPILER OPTIMIZATION EXPERIMENT
+2026-03-29 12:53:39,775 | Experiment | INFO | run_experiment:68 |   M.Tech Project - NIT Tiruchirappalli
+2026-03-29 12:53:39,775 | Experiment | INFO | run_experiment:69 | ======================================================================
+2026-03-29 12:53:39,775 | Experiment | INFO | run_experiment:74 | 
+==================================================
+2026-03-29 12:53:39,775 | Experiment | INFO | run_experiment:75 | PHASE 1: DATASET GENERATION
+2026-03-29 12:53:39,775 | Experiment | INFO | run_experiment:76 | ==================================================
+2026-03-29 12:53:41,730 | Experiment | INFO | run_experiment:79 | Dataset: train=(944, 69), val=(202, 69), test=(204, 69)
+2026-03-29 12:53:41,730 | Experiment | INFO | run_experiment:84 | 
+==================================================
+2026-03-29 12:53:41,733 | Experiment | INFO | run_experiment:85 | PHASE 2: MODEL TRAINING
+2026-03-29 12:53:41,734 | Experiment | INFO | run_experiment:86 | ==================================================
+2026-03-29 12:53:41,734 | Experiment | INFO | run_experiment:89 | 
+--- Random Forest ---
+2026-03-29 12:53:51,315 | Experiment | INFO | run_experiment:94 | 
+--- XGBoost ---
+2026-03-29 12:53:51,734 | Experiment | INFO | run_experiment:99 | 
+--- Deep Neural Network ---
+2026-03-29 12:53:51,849 | Experiment | INFO | run_experiment:104 | 
+--- Ensemble (RF + XGBoost + DNN) ---
+2026-03-29 12:54:01,480 | Experiment | INFO | run_experiment:109 | 
+--- Base Paper (Decision Tree) ---
+2026-03-29 12:54:01,571 | Experiment | INFO | run_experiment:113 | 
+--- Base Paper (KNN) ---
+2026-03-29 12:54:01,710 | Experiment | INFO | run_experiment:120 | 
+==================================================
+2026-03-29 12:54:01,710 | Experiment | INFO | run_experiment:121 | PHASE 3: EVALUATION
+2026-03-29 12:54:01,711 | Experiment | INFO | run_experiment:122 | ==================================================
+2026-03-29 12:54:01,713 | Experiment | INFO | run_experiment:140 | 
+Evaluating: Random Forest
+2026-03-29 12:54:01,848 | Experiment | INFO | run_experiment:140 | 
+Evaluating: XGBoost
+2026-03-29 12:54:01,897 | Experiment | INFO | run_experiment:140 | 
+Evaluating: DNN
+2026-03-29 12:54:01,932 | Experiment | INFO | run_experiment:140 | 
+Evaluating: Ensemble
+2026-03-29 12:54:02,068 | Experiment | INFO | run_experiment:140 | 
+Evaluating: Base Paper (DT)
+2026-03-29 12:54:02,093 | Experiment | INFO | run_experiment:140 | 
+Evaluating: Base Paper (KNN)
+2026-03-29 12:54:02,128 | Experiment | INFO | run_experiment:145 | 
+--- Standard Level Baselines ---
+2026-03-29 12:54:02,200 | Experiment | INFO | run_experiment:151 | 
+--- Iterative Compilation Baseline ---
+2026-03-29 12:54:10,478 | Experiment | INFO | run_experiment:160 | 
+--- Computing Speedups ---
+2026-03-29 12:54:12,351 | Experiment | INFO | run_experiment:189 | 
+--- Adaptability Analysis ---
+2026-03-29 12:54:12,703 | Experiment | INFO | run_experiment:198 | Adaptability Score: 0.7778
+2026-03-29 12:54:12,795 | Experiment | INFO | run_experiment:214 | 
+==================================================
+2026-03-29 12:54:12,795 | Experiment | INFO | run_experiment:215 | PHASE 4: COMPREHENSIVE RESULTS
+2026-03-29 12:54:12,795 | Experiment | INFO | run_experiment:216 | ==================================================
+2026-03-29 12:54:12,840 | Experiment | INFO | run_experiment:260 | 
+==================================================
+2026-03-29 12:54:12,840 | Experiment | INFO | run_experiment:261 | PHASE 5: GENERATING VISUALIZATIONS
+2026-03-29 12:54:12,840 | Experiment | INFO | run_experiment:262 | ==================================================
+2026-03-29 12:54:29,258 | Experiment | INFO | run_experiment:341 | 
+==================================================
+2026-03-29 12:54:29,258 | Experiment | INFO | run_experiment:342 | PHASE 6: STATISTICAL SIGNIFICANCE TESTING
+2026-03-29 12:54:29,258 | Experiment | INFO | run_experiment:343 | ==================================================
+2026-03-29 12:54:29,261 | Experiment | INFO | run_experiment:348 | Paired t-test (Our vs O3): t=-17.6838, p=0.000000, significant=True
+2026-03-29 12:54:29,265 | Experiment | INFO | run_experiment:352 | Wilcoxon test: p=0.000000, significant=True
+2026-03-29 12:54:29,328 | Experiment | INFO | run_experiment:356 | Bootstrap 95% CI for speedup difference: [-0.2913, -0.2322]
+2026-03-29 12:54:29,328 | Experiment | INFO | run_experiment:360 | Cohen's d effect size: -3.2286
+2026-03-29 12:54:29,330 | Experiment | INFO | run_experiment:404 | 
+======================================================================
+2026-03-29 12:54:29,330 | Experiment | INFO | run_experiment:405 |   EXPERIMENT COMPLETE
+2026-03-29 12:54:29,330 | Experiment | INFO | run_experiment:406 |   Total time: 49.55s
+2026-03-29 12:54:29,330 | Experiment | INFO | run_experiment:407 |   Best model: XGBoost
+2026-03-29 12:54:29,331 | Experiment | INFO | run_experiment:408 |   Best F1-macro: 0.8798
+2026-03-29 12:54:29,331 | Experiment | INFO | run_experiment:409 |   Speedup vs O3: 0.7971x
+2026-03-29 12:54:29,331 | Experiment | INFO | run_experiment:410 |   Adaptability: 0.7778
+2026-03-29 12:54:29,332 | Experiment | INFO | run_experiment:411 |   Results saved to: results/
+2026-03-29 12:54:29,332 | Experiment | INFO | run_experiment:412 | ======================================================================

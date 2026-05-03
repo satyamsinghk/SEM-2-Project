@@ -1,0 +1,2 @@
+2026-03-29 13:37:16,969 | RandomForest | INFO | train:78 | Training Random Forest on 944 samples, 69 features
+2026-03-29 13:37:32,580 | RandomForest | INFO | train:139 | Training complete in 2.88s, CV F1-macro: 0.8644 ± 0.0543

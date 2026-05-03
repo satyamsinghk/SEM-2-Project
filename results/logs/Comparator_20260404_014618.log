@@ -1,0 +1,12 @@
+2026-04-04 01:47:13,411 | Comparator | INFO | add_result:23 | Added results for: Random Forest
+2026-04-04 01:47:13,411 | Comparator | INFO | add_result:23 | Added results for: XGBoost
+2026-04-04 01:47:13,412 | Comparator | INFO | add_result:23 | Added results for: DNN
+2026-04-04 01:47:13,412 | Comparator | INFO | add_result:23 | Added results for: Ensemble
+2026-04-04 01:47:13,412 | Comparator | INFO | add_result:23 | Added results for: Base Paper (DT)
+2026-04-04 01:47:13,412 | Comparator | INFO | add_result:23 | Added results for: Base Paper (KNN)
+2026-04-04 01:47:13,415 | Comparator | INFO | add_result:23 | Added results for: Our Approach (Ensemble)
+2026-04-04 01:47:13,415 | Comparator | INFO | add_result:23 | Added results for: -O0
+2026-04-04 01:47:13,415 | Comparator | INFO | add_result:23 | Added results for: -O1
+2026-04-04 01:47:13,416 | Comparator | INFO | add_result:23 | Added results for: -O2
+2026-04-04 01:47:13,416 | Comparator | INFO | add_result:23 | Added results for: -O3
+2026-04-04 01:47:13,505 | Comparator | INFO | save_comparison:90 | Saved comparison to results/tables/method_comparison.csv
