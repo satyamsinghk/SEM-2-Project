@@ -130,7 +130,8 @@ class BaseModel(ABC):
         }
 
         logger.info(f"[{self.name}] Accuracy={accuracy:.4f}, "
-                    f"F1-macro={f1_macro:.4f}, F1-weighted={f1_weighted:.4f}")
+                    f"F1-macro={f1_macro:.4f}, F1-weighted={f1_weighted:.4f}, "
+                    f"Precision={precision:.4f}, Recall={recall:.4f}")
 
         return results
 

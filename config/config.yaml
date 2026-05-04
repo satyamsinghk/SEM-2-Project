@@ -17,11 +17,11 @@ paths:
   features_dir: "data/features"
   labels_dir: "data/labels"
   processed_dir: "data/processed"
-  results_dir: "result_2"
-  figures_dir: "result_2/figures"
-  tables_dir: "result_2/tables"
-  logs_dir: "result_2/logs"
-  models_dir: "result_2/models"
+  results_dir: "result_30k"
+  figures_dir: "result_30k/figures"
+  tables_dir: "result_30k/tables"
+  logs_dir: "result_30k/logs"
+  models_dir: "result_30k/models"
 
 features:
   autophase_dim: 56

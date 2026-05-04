@@ -41,6 +41,8 @@ class MethodComparator:
                 row['Accuracy'] = metrics['prediction'].get('accuracy', '-')
                 row['F1 (macro)'] = metrics['prediction'].get('f1_macro', '-')
                 row['F1 (weighted)'] = metrics['prediction'].get('f1_weighted', '-')
+                row['Precision'] = metrics['prediction'].get('precision_macro', '-')
+                row['Recall'] = metrics['prediction'].get('recall_macro', '-')
 
             if 'overhead' in metrics:
                 row['Pred Time (ms)'] = metrics['overhead'].get('ml_per_program_ms', '-')

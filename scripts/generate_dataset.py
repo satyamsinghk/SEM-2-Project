@@ -595,8 +595,8 @@ def generate_dataset(config_path: str = "config/config.yaml"):
         X_augmented.append(X[i])
         y_augmented.append(y[i])
 
-        # Add 10 noisy copies for intense training dataset scaling
-        for _ in range(10):
+        # Add 49 noisy copies for 30k-scale training dataset
+        for _ in range(49):
             noise = rng.normal(0, 0.02, size=X[i].shape)
             noisy_sample = X[i] + noise
             # Re-normalize priority vector (last 4 dims)

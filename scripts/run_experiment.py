@@ -76,6 +76,12 @@ def run_experiment(config_path: str = "config/config.yaml"):
     logger.info("=" * 50)
 
     X_train, X_val, X_test, y_train, y_val, y_test = generate_dataset(config_path)
+
+    # Load config for output paths
+    data_loader = DataLoader(config_path)
+    config = data_loader.config
+    results_dir = config['paths']['results_dir']
+    tables_dir = config['paths']['tables_dir']
     logger.info(f"Dataset: train={X_train.shape}, val={X_val.shape}, test={X_test.shape}")
 
     # ================================================================
@@ -252,7 +258,8 @@ def run_experiment(config_path: str = "config/config.yaml"):
 
     # Print comparison
     comparator.print_comparison()
-    comparator.save_comparison("results/tables/method_comparison.csv")
+    os.makedirs(tables_dir, exist_ok=True)
+    comparator.save_comparison(os.path.join(tables_dir, "method_comparison.csv"))
 
     # ================================================================
     # PHASE 5: Visualization
@@ -261,9 +268,10 @@ def run_experiment(config_path: str = "config/config.yaml"):
     logger.info("PHASE 5: GENERATING VISUALIZATIONS")
     logger.info("=" * 50)
 
-    perf_plotter = PerformancePlotter()
-    feat_plotter = FeatureAnalysisPlotter()
-    pri_plotter = PrioritySensitivityPlotter()
+    figures_dir = config['paths']['figures_dir']
+    perf_plotter = PerformancePlotter(output_dir=figures_dir)
+    feat_plotter = FeatureAnalysisPlotter(output_dir=figures_dir)
+    pri_plotter = PrioritySensitivityPlotter(output_dir=figures_dir)
 
     # 5a. Model comparison radar
     radar_data = {}
@@ -381,6 +389,14 @@ def run_experiment(config_path: str = "config/config.yaml"):
             name: round(result['f1_macro'], 4)
             for name, result in model_results.items()
         },
+        "model_precision_macro": {
+            name: round(result['precision_macro'], 4)
+            for name, result in model_results.items()
+        },
+        "model_recall_macro": {
+            name: round(result['recall_macro'], 4)
+            for name, result in model_results.items()
+        },
         "best_model": max(model_results, key=lambda k: model_results[k]['f1_macro']),
         "speedup_vs_O3": {
             "mean": round(float(np.mean(our_speedups / o3_speedups)), 4),
@@ -396,8 +412,8 @@ def run_experiment(config_path: str = "config/config.yaml"):
         },
     }
 
-    summary_path = "results/experiment_summary.json"
-    os.makedirs("results", exist_ok=True)
+    summary_path = os.path.join(results_dir, "experiment_summary.json")
+    os.makedirs(results_dir, exist_ok=True)
     with open(summary_path, 'w') as f:
         json.dump(summary, f, indent=2, cls=NumpyEncoder)
 
@@ -408,7 +424,7 @@ def run_experiment(config_path: str = "config/config.yaml"):
     logger.info(f"  Best F1-macro: {max(summary['model_f1_macro'].values()):.4f}")
     logger.info(f"  Speedup vs O3: {summary['speedup_vs_O3']['mean']:.4f}x")
     logger.info(f"  Adaptability: {summary['adaptability_score']:.4f}")
-    logger.info(f"  Results saved to: results/")
+    logger.info(f"  Results saved to: {results_dir}/")
     logger.info("=" * 70)
 
     return summary

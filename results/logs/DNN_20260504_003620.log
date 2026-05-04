@@ -1,0 +1,4 @@
+2026-05-04 00:44:01,528 | DNN | INFO | _check_torch:79 | Using sklearn MLPClassifier backend (stable cross-platform)
+2026-05-04 00:44:01,529 | DNN | INFO | _train_sklearn:252 | Training DNN (sklearn MLP) on 21000 samples
+2026-05-04 00:45:04,357 | DNN | INFO | _check_torch:79 | Using sklearn MLPClassifier backend (stable cross-platform)
+2026-05-04 00:51:34,751 | DNN | INFO | _train_sklearn:252 | Training DNN (sklearn MLP) on 21000 samples

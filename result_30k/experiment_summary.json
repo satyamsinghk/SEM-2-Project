@@ -1,0 +1,55 @@
+{
+  "experiment_time_seconds": 7459.88,
+  "dataset": {
+    "train_samples": 21000,
+    "val_samples": 4500,
+    "test_samples": 4500,
+    "feature_dim": 95,
+    "num_classes": 10
+  },
+  "model_accuracy": {
+    "Random Forest": 0.9956,
+    "XGBoost": 0.9893,
+    "DNN": 0.9936,
+    "Ensemble": 0.9947,
+    "Base Paper (DT)": 0.9573,
+    "Base Paper (KNN)": 0.9933
+  },
+  "model_f1_macro": {
+    "Random Forest": 0.9951,
+    "XGBoost": 0.9849,
+    "DNN": 0.9896,
+    "Ensemble": 0.9923,
+    "Base Paper (DT)": 0.9416,
+    "Base Paper (KNN)": 0.9928
+  },
+  "model_precision_macro": {
+    "Random Forest": 0.9962,
+    "XGBoost": 0.9886,
+    "DNN": 0.9947,
+    "Ensemble": 0.9948,
+    "Base Paper (DT)": 0.9451,
+    "Base Paper (KNN)": 0.9932
+  },
+  "model_recall_macro": {
+    "Random Forest": 0.994,
+    "XGBoost": 0.9815,
+    "DNN": 0.9853,
+    "Ensemble": 0.99,
+    "Base Paper (DT)": 0.9385,
+    "Base Paper (KNN)": 0.9924
+  },
+  "best_model": "Random Forest",
+  "speedup_vs_O3": {
+    "mean": 0.7776,
+    "our_mean": 1.0077,
+    "o3_mean": 1.2989
+  },
+  "adaptability_score": 0.6777777777777777,
+  "prediction_time_ms": 0.9217742284138998,
+  "statistical_tests": {
+    "ttest_p_value": 6.794765811281745e-18,
+    "ttest_significant": true,
+    "cohens_d": -3.4644060306960376
+  }
+}
