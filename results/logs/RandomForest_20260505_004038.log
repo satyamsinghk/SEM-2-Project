@@ -1,0 +1,4 @@
+2026-05-05 00:40:56,104 | RandomForest | INFO | train:79 | Training Random Forest on 50400 samples, 95 features
+2026-05-05 01:01:05,321 | RandomForest | INFO | train:141 | Training complete in 254.72s, CV F1-macro: 0.9778 ± 0.0021
+2026-05-05 01:09:54,841 | RandomForest | INFO | train:79 | Training Random Forest on 50400 samples, 95 features
+2026-05-05 01:26:16,718 | RandomForest | INFO | train:141 | Training complete in 206.61s, CV F1-macro: 0.9778 ± 0.0021

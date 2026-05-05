@@ -1,0 +1,27 @@
+2026-05-04 23:54:18,593 | DatasetGeneration | INFO | generate_dataset:519 | ============================================================
+2026-05-04 23:54:18,594 | DatasetGeneration | INFO | generate_dataset:520 | DATASET GENERATION PIPELINE
+2026-05-04 23:54:18,594 | DatasetGeneration | INFO | generate_dataset:521 | ============================================================
+2026-05-04 23:54:18,638 | DatasetGeneration | INFO | generate_dataset:530 | Step 1: Creating benchmark program characteristics...
+2026-05-04 23:54:18,640 | DatasetGeneration | INFO | generate_dataset:535 |   Created 40 benchmark programs (C: 30, C++: 5, Python: 5)
+2026-05-04 23:54:18,640 | DatasetGeneration | INFO | generate_dataset:538 | Step 2: Extracting features (Autophase + CFG)...
+2026-05-04 23:54:19,169 | DatasetGeneration | INFO | generate_dataset:541 |   Feature matrix shape: (40, 91)
+2026-05-04 23:54:19,170 | DatasetGeneration | INFO | generate_dataset:544 | Step 3: Initializing pass manager...
+2026-05-04 23:54:19,171 | DatasetGeneration | INFO | generate_dataset:550 | Step 4: Generating priority vectors...
+2026-05-04 23:54:19,172 | DatasetGeneration | INFO | generate_dataset:560 | Step 5: Program-level train/val/test split...
+2026-05-04 23:54:19,172 | DatasetGeneration | INFO | generate_dataset:580 |   Train programs (28): ['gramschmidt', 'ludcmp', 'lu', 'syr2k', 'cholesky', 'jacobi-1d', 'py_ml_inference', 'syrk', 'py_string_manip', 'covariance', 'symm', 'gesummv', 'jacobi-2d', 'cpp_hash_map', 'cpp_regex', 'gemver', 'trisolv', 'mvt', '2mm', 'cpp_template_metaprog', 'correlation', 'heat-3d', '3mm', 'matrix_multiply', 'doitgen', 'atax', 'cpp_vector_sort', 'py_data_pipeline']
+2026-05-04 23:54:19,173 | DatasetGeneration | INFO | generate_dataset:581 |   Val programs (6): ['bicg', 'py_json_parser', 'floyd-warshall', 'cpp_polymorphism', 'fdtd-2d', 'nussinov']
+2026-05-04 23:54:19,173 | DatasetGeneration | INFO | generate_dataset:582 |   Test programs (6): ['durbin', 'deriche', 'gemm', 'seidel-2d', 'trmm', 'py_web_router']
+2026-05-04 23:54:19,173 | DatasetGeneration | INFO | generate_dataset:585 | Step 6: Creating labeled dataset (features + priority → optimal class)...
+2026-05-04 23:54:21,662 | DatasetGeneration | INFO | generate_dataset:605 |   Base train: 420, Val: 90, Test: 90
+2026-05-04 23:54:21,662 | DatasetGeneration | INFO | generate_dataset:606 |   Feature dimension: 95
+2026-05-04 23:54:21,663 | DatasetGeneration | INFO | generate_dataset:607 |   Train class distribution: [ 10  86  14  18   5 138   7  31 104   7]
+2026-05-04 23:54:21,664 | DatasetGeneration | INFO | generate_dataset:608 |   Test class distribution:  [ 5 16  4  1  1 27  0  6 27  3]
+2026-05-04 23:54:21,664 | DatasetGeneration | INFO | generate_dataset:611 | Step 7: Data augmentation (training set only)...
+2026-05-04 23:54:22,678 | DatasetGeneration | INFO | generate_dataset:639 |   After augmentation — Train: 21000, Val: 90, Test: 90
+2026-05-04 23:54:22,718 | DatasetGeneration | INFO | generate_dataset:662 | ============================================================
+2026-05-04 23:54:22,718 | DatasetGeneration | INFO | generate_dataset:663 | DATASET GENERATION COMPLETE (PROGRAM-LEVEL SPLIT)
+2026-05-04 23:54:22,718 | DatasetGeneration | INFO | generate_dataset:664 | Train: 21000 samples (28 programs, augmented)
+2026-05-04 23:54:22,719 | DatasetGeneration | INFO | generate_dataset:665 | Val:   90 samples (6 programs, clean)
+2026-05-04 23:54:22,719 | DatasetGeneration | INFO | generate_dataset:666 | Test:  90 samples (6 programs, clean)
+2026-05-04 23:54:22,719 | DatasetGeneration | INFO | generate_dataset:667 | Features: 95, Classes: 10
+2026-05-04 23:54:22,719 | DatasetGeneration | INFO | generate_dataset:668 | ============================================================

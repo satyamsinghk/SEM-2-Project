@@ -1,0 +1,12 @@
+2026-05-05 00:27:39,718 | Ensemble | INFO | train:78 | Training Ensemble on 25200 samples
+2026-05-05 00:27:39,719 | Ensemble | INFO | train:83 | --- Training random_forest ---
+2026-05-05 00:36:08,606 | Ensemble | INFO | train:83 | --- Training xgboost ---
+2026-05-05 00:36:27,714 | Ensemble | INFO | train:83 | --- Training dnn ---
+2026-05-05 00:38:19,682 | Ensemble | INFO | _optimize_weights:178 | Optimized weights: {'random_forest': np.float64(0.3333), 'xgboost': np.float64(0.3333), 'dnn': np.float64(0.3333)}
+2026-05-05 00:38:21,362 | Ensemble | INFO | train:127 | Ensemble training complete in 639.96s
+2026-05-05 00:38:21,362 | Ensemble | INFO | train:128 | Optimized weights: {'random_forest': np.float64(0.3333), 'xgboost': np.float64(0.3333), 'dnn': np.float64(0.3333)}
+2026-05-05 00:38:21,362 | Ensemble | INFO | train:131 | Validation F1 scores:
+2026-05-05 00:38:21,363 | Ensemble | INFO | train:133 |   random_forest: accuracy=0.6630, f1=0.4113
+2026-05-05 00:38:21,363 | Ensemble | INFO | train:133 |   xgboost: accuracy=0.6630, f1=0.3855
+2026-05-05 00:38:21,363 | Ensemble | INFO | train:133 |   dnn: accuracy=0.5519, f1=0.3510
+2026-05-05 00:38:21,363 | Ensemble | INFO | train:133 |   ensemble: accuracy=0.6222, f1=0.4154

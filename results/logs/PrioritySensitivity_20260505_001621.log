@@ -1,0 +1,2 @@
+2026-05-05 00:38:54,861 | PrioritySensitivity | INFO | plot_priority_sensitivity:51 | Saved: result_real/figures/priority_sensitivity.png
+2026-05-05 00:38:55,356 | PrioritySensitivity | INFO | plot_adaptability_heatmap:80 | Saved: result_real/figures/adaptability_heatmap.png

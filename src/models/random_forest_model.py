@@ -51,6 +51,7 @@ class RandomForestOptimizer(BaseModel):
             'max_features': 'sqrt',
             'random_state': 42,
             'n_jobs': -1,
+            'class_weight': 'balanced',
         }
 
         self.model = RandomForestClassifier(**self.config)
@@ -90,6 +91,7 @@ class RandomForestOptimizer(BaseModel):
 
             base_rf = RandomForestClassifier(
                 random_state=self.config.get('random_state', 42),
+                class_weight='balanced',
                 n_jobs=-1
             )
 

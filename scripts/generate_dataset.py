@@ -375,135 +375,182 @@ def create_polybench_programs() -> List[ProgramCharacteristics]:
     return programs
 
 
-def create_cpp_programs() -> List[ProgramCharacteristics]:
+def create_cpp_programs(rng=None) -> List[ProgramCharacteristics]:
     """
-    Simulate LLVM IR characteristics typical of C++ programs (OOP, STL, Exceptions).
-    These typically have deeper call stacks, more functions, more phi nodes, and invoke instructions.
+    Generate 20 structurally diverse C++ program IR profiles.
+    Uses parametric sampling across OOP archetypes.
     """
+    if rng is None:
+        rng = np.random.RandomState(123)
+
+    archetypes = [
+        ("cpp_stl_algo",    (8, 25),  (80, 250),  (800, 2800),  0.0,  0.15, 0.08, (1, 3)),
+        ("cpp_oop_inherit", (15, 40), (100, 200),  (1200, 2500), 0.05, 0.20, 0.06, (1, 2)),
+        ("cpp_template",    (20, 50), (150, 300),  (1800, 3500), 0.0,  0.12, 0.07, (2, 4)),
+        ("cpp_exception",   (10, 30), (120, 280),  (1500, 3000), 0.02, 0.18, 0.10, (1, 3)),
+        ("cpp_smart_ptr",   (12, 35), (90, 220),   (1000, 2400), 0.01, 0.22, 0.07, (1, 2)),
+    ]
     programs = []
-    
-    programs.append(ProgramCharacteristics(
-        name="cpp_vector_sort", language="cpp", num_functions=15, num_basic_blocks=120, num_instructions=1500,
-        num_load_inst=300, num_store_inst=150, num_branch_inst=80, num_call_inst=45,
-        num_binary_ops=250, num_unary_ops=15, num_int_inst=400, num_float_inst=100,
-        num_gep_inst=180, num_phi_nodes=65, num_alloca_inst=40, num_icmp_inst=60,
-        num_fcmp_inst=0, num_select_inst=10, num_switch_inst=2, num_return_inst=15,
-        num_edges=160, num_crit_edges=25, num_cond_br=65, num_uncond_br=15,
-        num_mult=80, num_div=10, num_shift=15, num_and_or=20, num_xor=5,
-        avg_args_per_func=4.5, std_args_per_func=2.0, loop_depth=3, num_loops=8
-    ))
-
-    programs.append(ProgramCharacteristics(
-        name="cpp_hash_map", language="cpp", num_functions=22, num_basic_blocks=180, num_instructions=2100,
-        num_load_inst=450, num_store_inst=200, num_branch_inst=120, num_call_inst=80,
-        num_binary_ops=300, num_unary_ops=25, num_int_inst=600, num_float_inst=0,
-        num_gep_inst=250, num_phi_nodes=90, num_alloca_inst=60, num_icmp_inst=95,
-        num_fcmp_inst=0, num_select_inst=15, num_switch_inst=5, num_return_inst=22,
-        num_edges=240, num_crit_edges=35, num_cond_br=95, num_uncond_br=25,
-        num_mult=120, num_div=45, num_shift=35, num_and_or=40, num_xor=15,
-        avg_args_per_func=3.8, std_args_per_func=1.5, loop_depth=2, num_loops=10
-    ))
-    
-    programs.append(ProgramCharacteristics(
-        name="cpp_polymorphism", language="cpp", num_functions=35, num_basic_blocks=150, num_instructions=1800,
-        num_load_inst=350, num_store_inst=120, num_branch_inst=90, num_call_inst=110,
-        num_binary_ops=220, num_unary_ops=20, num_int_inst=450, num_float_inst=50,
-        num_gep_inst=280, num_phi_nodes=70, num_alloca_inst=45, num_icmp_inst=65,
-        num_fcmp_inst=5, num_select_inst=8, num_switch_inst=1, num_return_inst=35,
-        num_edges=210, num_crit_edges=30, num_cond_br=70, num_uncond_br=20,
-        num_mult=40, num_div=5, num_shift=10, num_and_or=15, num_xor=2,
-        avg_args_per_func=2.5, std_args_per_func=1.0, loop_depth=1, num_loops=4
-    ))
-    
-    programs.append(ProgramCharacteristics(
-        name="cpp_template_metaprog", language="cpp", num_functions=45, num_basic_blocks=220, num_instructions=2800,
-        num_load_inst=550, num_store_inst=280, num_branch_inst=140, num_call_inst=150,
-        num_binary_ops=400, num_unary_ops=30, num_int_inst=800, num_float_inst=0,
-        num_gep_inst=350, num_phi_nodes=110, num_alloca_inst=80, num_icmp_inst=110,
-        num_fcmp_inst=0, num_select_inst=20, num_switch_inst=3, num_return_inst=45,
-        num_edges=310, num_crit_edges=45, num_cond_br=110, num_uncond_br=30,
-        num_mult=150, num_div=20, num_shift=50, num_and_or=60, num_xor=10,
-        avg_args_per_func=3.2, std_args_per_func=1.8, loop_depth=3, num_loops=12
-    ))
-    
-    programs.append(ProgramCharacteristics(
-        name="cpp_regex", language="cpp", num_functions=18, num_basic_blocks=250, num_instructions=2400,
-        num_load_inst=400, num_store_inst=180, num_branch_inst=160, num_call_inst=60,
-        num_binary_ops=350, num_unary_ops=20, num_int_inst=700, num_float_inst=0,
-        num_gep_inst=220, num_phi_nodes=130, num_alloca_inst=50, num_icmp_inst=140,
-        num_fcmp_inst=0, num_select_inst=30, num_switch_inst=15, num_return_inst=18,
-        num_edges=360, num_crit_edges=60, num_cond_br=130, num_uncond_br=30,
-        num_mult=60, num_div=10, num_shift=25, num_and_or=80, num_xor=5,
-        avg_args_per_func=4.0, std_args_per_func=1.5, loop_depth=4, num_loops=15
-    ))
-
-    return programs
-
-def create_python_programs() -> List[ProgramCharacteristics]:
-    """
-    Simulate LLVM IR characteristics typical of Python (via JIT/Numba).
-    These have extremely high branching (type checks), dictionary lookups, and dynamic dispatch.
-    """
-    programs = []
-    
-    programs.append(ProgramCharacteristics(
-        name="py_json_parser", language="python", num_functions=8, num_basic_blocks=350, num_instructions=3800,
-        num_load_inst=800, num_store_inst=400, num_branch_inst=300, num_call_inst=180,
-        num_binary_ops=450, num_unary_ops=40, num_int_inst=1200, num_float_inst=50,
-        num_gep_inst=600, num_phi_nodes=220, num_alloca_inst=100, num_icmp_inst=280,
-        num_fcmp_inst=10, num_select_inst=40, num_switch_inst=25, num_return_inst=8,
-        num_edges=520, num_crit_edges=90, num_cond_br=250, num_uncond_br=50,
-        num_mult=80, num_div=20, num_shift=40, num_and_or=110, num_xor=15,
-        avg_args_per_func=5.5, std_args_per_func=2.5, loop_depth=3, num_loops=12
-    ))
-
-    programs.append(ProgramCharacteristics(
-        name="py_data_pipeline", language="python", num_functions=12, num_basic_blocks=420, num_instructions=4500,
-        num_load_inst=950, num_store_inst=480, num_branch_inst=350, num_call_inst=220,
-        num_binary_ops=520, num_unary_ops=50, num_int_inst=1500, num_float_inst=300,
-        num_gep_inst=750, num_phi_nodes=280, num_alloca_inst=120, num_icmp_inst=320,
-        num_fcmp_inst=80, num_select_inst=50, num_switch_inst=30, num_return_inst=12,
-        num_edges=640, num_crit_edges=110, num_cond_br=290, num_uncond_br=60,
-        num_mult=150, num_div=50, num_shift=30, num_and_or=140, num_xor=10,
-        avg_args_per_func=4.0, std_args_per_func=2.0, loop_depth=4, num_loops=18
-    ))
-    
-    programs.append(ProgramCharacteristics(
-        name="py_ml_inference", language="python", num_functions=6, num_basic_blocks=280, num_instructions=3100,
-        num_load_inst=650, num_store_inst=320, num_branch_inst=220, num_call_inst=140,
-        num_binary_ops=480, num_unary_ops=35, num_int_inst=800, num_float_inst=600,
-        num_gep_inst=450, num_phi_nodes=180, num_alloca_inst=80, num_icmp_inst=180,
-        num_fcmp_inst=150, num_select_inst=35, num_switch_inst=10, num_return_inst=6,
-        num_edges=410, num_crit_edges=70, num_cond_br=180, num_uncond_br=40,
-        num_mult=250, num_div=80, num_shift=20, num_and_or=70, num_xor=5,
-        avg_args_per_func=3.5, std_args_per_func=1.2, loop_depth=5, num_loops=25
-    ))
-
-    programs.append(ProgramCharacteristics(
-        name="py_web_router", language="python", num_functions=25, num_basic_blocks=500, num_instructions=5200,
-        num_load_inst=1100, num_store_inst=550, num_branch_inst=420, num_call_inst=350,
-        num_binary_ops=550, num_unary_ops=60, num_int_inst=1800, num_float_inst=10,
-        num_gep_inst=850, num_phi_nodes=320, num_alloca_inst=180, num_icmp_inst=380,
-        num_fcmp_inst=0, num_select_inst=60, num_switch_inst=45, num_return_inst=25,
-        num_edges=780, num_crit_edges=140, num_cond_br=350, num_uncond_br=70,
-        num_mult=90, num_div=15, num_shift=50, num_and_or=180, num_xor=20,
-        avg_args_per_func=2.8, std_args_per_func=1.5, loop_depth=2, num_loops=8
-    ))
-    
-    programs.append(ProgramCharacteristics(
-        name="py_string_manip", language="python", num_functions=10, num_basic_blocks=320, num_instructions=3400,
-        num_load_inst=700, num_store_inst=350, num_branch_inst=280, num_call_inst=200,
-        num_binary_ops=400, num_unary_ops=45, num_int_inst=1300, num_float_inst=0,
-        num_gep_inst=550, num_phi_nodes=200, num_alloca_inst=90, num_icmp_inst=250,
-        num_fcmp_inst=0, num_select_inst=45, num_switch_inst=20, num_return_inst=10,
-        num_edges=480, num_crit_edges=85, num_cond_br=230, num_uncond_br=50,
-        num_mult=60, num_div=25, num_shift=45, num_and_or=130, num_xor=12,
-        avg_args_per_func=3.2, std_args_per_func=1.8, loop_depth=3, num_loops=15
-    ))
-
+    for arch_idx, (prefix, fr, bbr, ir, ff, cf, bf, ldr) in enumerate(archetypes):
+        for var in range(4):
+            nf = rng.randint(*fr)
+            nbb = rng.randint(*bbr)
+            ni = rng.randint(*ir)
+            nl = rng.randint(int(ni*0.18), int(ni*0.28))
+            ns = rng.randint(int(ni*0.06), int(ni*0.14))
+            nbr = rng.randint(int(ni*bf*0.7), int(ni*bf*1.3)+1)
+            nc = rng.randint(int(ni*cf*0.7), int(ni*cf*1.3)+1)
+            nbin = rng.randint(int(ni*0.12), int(ni*0.22))
+            nfloat = int(ni*ff*rng.uniform(0.8, 1.2))
+            nint = rng.randint(int(ni*0.25), int(ni*0.40))
+            ngep = rng.randint(int(ni*0.10), int(ni*0.18))
+            nphi = rng.randint(int(nbb*0.3), int(nbb*0.7))
+            nalloc = rng.randint(int(nf*1.5), int(nf*3))
+            nicmp = rng.randint(int(nbr*0.5), int(nbr*0.9))
+            ld = rng.randint(*ldr)
+            nloops = rng.randint(2, 15)
+            programs.append(ProgramCharacteristics(
+                name=f"{prefix}_v{var}", language="cpp",
+                num_functions=nf, num_basic_blocks=nbb, num_instructions=ni,
+                num_load_inst=nl, num_store_inst=ns, num_branch_inst=nbr,
+                num_call_inst=nc, num_binary_ops=nbin, num_unary_ops=rng.randint(5, 40),
+                num_int_inst=nint, num_float_inst=nfloat,
+                num_gep_inst=ngep, num_phi_nodes=nphi, num_alloca_inst=nalloc,
+                num_icmp_inst=nicmp, num_fcmp_inst=rng.randint(0, 15),
+                num_select_inst=rng.randint(2, 30), num_switch_inst=rng.randint(0, 10),
+                num_return_inst=nf,
+                num_edges=rng.randint(int(nbb*1.2), int(nbb*1.8)),
+                num_crit_edges=rng.randint(int(nbb*0.1), int(nbb*0.25)),
+                num_cond_br=rng.randint(int(nbr*0.6), int(nbr*0.85)),
+                num_uncond_br=rng.randint(int(nbr*0.1), int(nbr*0.3)),
+                num_mult=rng.randint(20, 180), num_div=rng.randint(0, 50),
+                num_shift=rng.randint(5, 55), num_and_or=rng.randint(10, 90),
+                num_xor=rng.randint(0, 20),
+                avg_args_per_func=round(rng.uniform(2.0, 5.0), 1),
+                std_args_per_func=round(rng.uniform(0.8, 2.0), 1),
+                loop_depth=ld, num_loops=nloops
+            ))
     return programs
 
 
+def create_python_programs(rng=None) -> List[ProgramCharacteristics]:
+    """
+    Generate 20 structurally diverse Python (JIT/Numba) IR profiles.
+    """
+    if rng is None:
+        rng = np.random.RandomState(456)
+
+    archetypes = [
+        ("py_data_proc",  (5, 15),  (200, 500), (2000, 5500), 0.10, 0.08, 0.10, (2, 5)),
+        ("py_web_app",    (10, 30), (300, 600), (3000, 6000), 0.01, 0.12, 0.12, (1, 3)),
+        ("py_ml_model",   (4, 12),  (200, 400), (2500, 5000), 0.25, 0.06, 0.08, (3, 6)),
+        ("py_text_nlp",   (6, 20),  (250, 500), (2800, 5500), 0.02, 0.10, 0.11, (2, 4)),
+        ("py_scientific", (3, 10),  (150, 350), (1800, 4000), 0.35, 0.05, 0.07, (4, 7)),
+    ]
+    programs = []
+    for arch_idx, (prefix, fr, bbr, ir, ff, cf, bf, ldr) in enumerate(archetypes):
+        for var in range(4):
+            nf = rng.randint(*fr)
+            nbb = rng.randint(*bbr)
+            ni = rng.randint(*ir)
+            nl = rng.randint(int(ni*0.18), int(ni*0.28))
+            ns = rng.randint(int(ni*0.08), int(ni*0.14))
+            nbr = rng.randint(int(ni*bf*0.8), int(ni*bf*1.2)+1)
+            nc = rng.randint(int(ni*cf*0.7), int(ni*cf*1.3)+1)
+            nbin = rng.randint(int(ni*0.10), int(ni*0.16))
+            nfloat = int(ni*ff*rng.uniform(0.7, 1.3))
+            nint = rng.randint(int(ni*0.30), int(ni*0.45))
+            ngep = rng.randint(int(ni*0.12), int(ni*0.22))
+            nphi = rng.randint(int(nbb*0.5), int(nbb*0.8))
+            nalloc = rng.randint(int(nf*3), int(nf*8))
+            nicmp = rng.randint(int(nbr*0.6), int(nbr*0.95))
+            ld = rng.randint(*ldr)
+            nloops = rng.randint(3, 25)
+            programs.append(ProgramCharacteristics(
+                name=f"{prefix}_v{var}", language="python",
+                num_functions=nf, num_basic_blocks=nbb, num_instructions=ni,
+                num_load_inst=nl, num_store_inst=ns, num_branch_inst=nbr,
+                num_call_inst=nc, num_binary_ops=nbin, num_unary_ops=rng.randint(10, 60),
+                num_int_inst=nint, num_float_inst=nfloat,
+                num_gep_inst=ngep, num_phi_nodes=nphi, num_alloca_inst=nalloc,
+                num_icmp_inst=nicmp, num_fcmp_inst=rng.randint(0, int(nfloat*0.3)+1),
+                num_select_inst=rng.randint(10, 60), num_switch_inst=rng.randint(5, 45),
+                num_return_inst=nf,
+                num_edges=rng.randint(int(nbb*1.3), int(nbb*1.8)),
+                num_crit_edges=rng.randint(int(nbb*0.15), int(nbb*0.30)),
+                num_cond_br=rng.randint(int(nbr*0.7), int(nbr*0.88)),
+                num_uncond_br=rng.randint(int(nbr*0.10), int(nbr*0.25)),
+                num_mult=rng.randint(30, 260), num_div=rng.randint(5, 90),
+                num_shift=rng.randint(10, 55), num_and_or=rng.randint(40, 200),
+                num_xor=rng.randint(2, 25),
+                avg_args_per_func=round(rng.uniform(2.5, 6.0), 1),
+                std_args_per_func=round(rng.uniform(1.0, 2.8), 1),
+                loop_depth=ld, num_loops=nloops
+            ))
+    return programs
+
+
+def create_extra_c_programs(rng=None) -> List[ProgramCharacteristics]:
+    """
+    Generate 50 additional diverse C programs using parametric sampling.
+    Covers tiny utils, medium kernels, large stencils, graph algos, crypto.
+    """
+    if rng is None:
+        rng = np.random.RandomState(789)
+
+    archetypes = [
+        ("c_tiny_util",    10, (1, 4),   (5, 25),    (50, 300),    0.0,  0.12, (0, 1)),
+        ("c_medium_kern",  10, (2, 6),   (20, 60),   (250, 800),   0.30, 0.08, (2, 3)),
+        ("c_large_stencil",10, (3, 8),   (40, 100),  (500, 1500),  0.40, 0.06, (3, 5)),
+        ("c_graph_algo",   10, (2, 5),   (30, 80),   (300, 1000),  0.0,  0.15, (1, 3)),
+        ("c_crypto",       10, (3, 10),  (50, 150),  (600, 2000),  0.0,  0.10, (2, 4)),
+    ]
+    programs = []
+    for prefix, count, fr, bbr, ir, ff, bf, ldr in archetypes:
+        for var in range(count):
+            nf = rng.randint(*fr)
+            nbb = rng.randint(*bbr)
+            ni = rng.randint(*ir)
+            nl = rng.randint(int(ni*0.15), int(ni*0.25)+1)
+            ns = rng.randint(int(ni*0.05), int(ni*0.12)+1)
+            nbr = rng.randint(int(ni*bf*0.7), int(ni*bf*1.3)+1)
+            nc = rng.randint(max(1, int(nf*0.5)), int(nf*2)+1)
+            nbin = rng.randint(int(ni*0.10), int(ni*0.25)+1)
+            nfloat = int(ni*ff*rng.uniform(0.7, 1.3))
+            nint = rng.randint(int(ni*0.20), int(ni*0.40)+1)
+            ngep = rng.randint(int(ni*0.08), int(ni*0.18)+1)
+            nphi = rng.randint(max(0, int(nbb*0.2)), int(nbb*0.6)+1)
+            nalloc = rng.randint(max(1, nf), int(nf*3)+1)
+            nicmp = rng.randint(max(0, int(nbr*0.4)), int(nbr*0.8)+1)
+            ld = rng.randint(*ldr)
+            nloops = rng.randint(0, max(1, int(nbb*0.15))+1)
+            programs.append(ProgramCharacteristics(
+                name=f"{prefix}_v{var}", language="c",
+                num_functions=nf, num_basic_blocks=max(1, nbb), num_instructions=max(10, ni),
+                num_load_inst=max(1, nl), num_store_inst=max(1, ns),
+                num_branch_inst=max(1, nbr), num_call_inst=max(1, nc),
+                num_binary_ops=max(1, nbin), num_unary_ops=rng.randint(0, 15),
+                num_int_inst=max(1, nint), num_float_inst=max(0, nfloat),
+                num_gep_inst=max(0, ngep), num_phi_nodes=max(0, nphi),
+                num_alloca_inst=max(1, nalloc), num_icmp_inst=max(0, nicmp),
+                num_fcmp_inst=rng.randint(0, max(1, int(nfloat*0.1))+1),
+                num_select_inst=rng.randint(0, 10),
+                num_switch_inst=rng.randint(0, 3),
+                num_return_inst=max(1, nf),
+                num_edges=max(1, rng.randint(max(1, int(nbb*1.1)), int(nbb*1.7)+1)),
+                num_crit_edges=rng.randint(0, max(1, int(nbb*0.2))+1),
+                num_cond_br=max(0, rng.randint(max(0, int(nbr*0.5)), int(nbr*0.8)+1)),
+                num_uncond_br=rng.randint(0, max(1, int(nbr*0.3))+1),
+                num_mult=rng.randint(0, max(1, int(nbin*0.5))+1),
+                num_div=rng.randint(0, max(1, int(nbin*0.15))+1),
+                num_shift=rng.randint(0, max(1, int(nbin*0.1))+1),
+                num_and_or=rng.randint(0, max(1, int(nbin*0.1))+1),
+                num_xor=rng.randint(0, 5),
+                avg_args_per_func=round(rng.uniform(1.5, 5.0), 1),
+                std_args_per_func=round(rng.uniform(0.5, 2.0), 1),
+                loop_depth=ld, num_loops=max(0, nloops)
+            ))
+    return programs
 def generate_dataset(config_path: str = "config/config.yaml"):
     """
     Generate the complete dataset for training and evaluation.
@@ -526,13 +573,14 @@ def generate_dataset(config_path: str = "config/config.yaml"):
     seed = config['dataset']['random_seed']
     rng = np.random.RandomState(seed)
 
-    # Step 1: Create benchmark programs
+    # Step 1: Create benchmark programs (120 total: 80 C + 20 C++ + 20 Python)
     logger.info("Step 1: Creating benchmark program characteristics...")
     c_programs = create_polybench_programs()
+    c_extra = create_extra_c_programs()
     cpp_programs = create_cpp_programs()
     py_programs = create_python_programs()
-    programs = c_programs + cpp_programs + py_programs
-    logger.info(f"  Created {len(programs)} benchmark programs (C: {len(c_programs)}, C++: {len(cpp_programs)}, Python: {len(py_programs)})")
+    programs = c_programs + c_extra + cpp_programs + py_programs
+    logger.info(f"  Created {len(programs)} benchmark programs (C: {len(c_programs)+len(c_extra)}, C++: {len(cpp_programs)}, Python: {len(py_programs)})")
 
     # Step 2: Extract features
     logger.info("Step 2: Extracting features (Autophase + CFG)...")
@@ -549,88 +597,95 @@ def generate_dataset(config_path: str = "config/config.yaml"):
     # Step 4: Generate priority vectors
     logger.info("Step 4: Generating priority vectors...")
     priority_system = MetricPriorityVector()
-    num_priorities_per_program = 15
+    num_priorities_per_program = 30
     priorities = priority_system.generate_training_priorities(
         num_priorities_per_program, strategy="mixed"
     )
+    logger.info(f"  Generated {len(priorities)} priority vectors")
 
-    # Step 5: Create labeled dataset
-    logger.info("Step 5: Creating labeled dataset (features + priority → optimal class)...")
+    # Step 5: PROGRAM-LEVEL SPLIT (prevents data leakage)
+    # Split programs FIRST, then generate samples per split.
+    # Test programs are NEVER seen during training — real deployment accuracy.
+    logger.info("Step 5: Program-level train/val/test split...")
 
-    all_features = []
-    all_labels = []
-    all_speedups = []
-    all_sizes = []
+    n_programs = len(programs)
+    prog_indices = rng.permutation(n_programs)
 
-    for prog_idx, program in enumerate(programs):
-        prog_features = raw_features[prog_idx]
+    train_ratio = config['dataset']['train_ratio']
+    val_ratio = config['dataset']['val_ratio']
 
-        for pri_idx in range(num_priorities_per_program):
-            priority = priorities[pri_idx % len(priorities)]
+    n_train_progs = max(1, int(n_programs * train_ratio))
+    n_val_progs = max(1, int(n_programs * val_ratio))
+    n_test_progs = n_programs - n_train_progs - n_val_progs
 
-            # Find optimal pass sequence for this program+priority
-            best_class, best_result = pass_evaluator.find_optimal_sequence(program, priority)
+    train_prog_idx = prog_indices[:n_train_progs]
+    val_prog_idx = prog_indices[n_train_progs:n_train_progs + n_val_progs]
+    test_prog_idx = prog_indices[n_train_progs + n_val_progs:]
 
-            # Augment features with priority vector
-            augmented = np.concatenate([prog_features, priority])
+    train_prog_names = [programs[i].name for i in train_prog_idx]
+    val_prog_names = [programs[i].name for i in val_prog_idx]
+    test_prog_names = [programs[i].name for i in test_prog_idx]
 
-            all_features.append(augmented)
-            all_labels.append(best_class)
-            all_speedups.append(best_result['speedup'])
-            all_sizes.append(best_result['size_ratio'])
+    logger.info(f"  Train programs ({n_train_progs}): {train_prog_names}")
+    logger.info(f"  Val programs ({n_val_progs}): {val_prog_names}")
+    logger.info(f"  Test programs ({n_test_progs}): {test_prog_names}")
 
-    X = np.array(all_features)
-    y = np.array(all_labels)
+    # Step 6: Generate labeled samples per split
+    logger.info("Step 6: Creating labeled dataset (features + priority → optimal class)...")
 
-    logger.info(f"  Total samples: {X.shape[0]}")
-    logger.info(f"  Feature dimension: {X.shape[1]}")
-    logger.info(f"  Class distribution: {np.bincount(y, minlength=num_classes)}")
+    def make_samples(prog_indices_list):
+        """Generate (feature+priority, label) for given program indices."""
+        feats, labels = [], []
+        for pidx in prog_indices_list:
+            prog = programs[pidx]
+            prog_feat = raw_features[pidx]
+            for pri_idx in range(num_priorities_per_program):
+                priority = priorities[pri_idx % len(priorities)]
+                best_class, best_result = pass_evaluator.find_optimal_sequence(prog, priority)
+                augmented = np.concatenate([prog_feat, priority])
+                feats.append(augmented)
+                labels.append(best_class)
+        return np.array(feats), np.array(labels)
 
-    # Step 6: Data augmentation - add noise variations for robustness
-    logger.info("Step 6: Data augmentation...")
+    X_train_base, y_train_base = make_samples(train_prog_idx)
+    X_val, y_val = make_samples(val_prog_idx)
+    X_test, y_test = make_samples(test_prog_idx)
+
+    logger.info(f"  Base train: {X_train_base.shape[0]}, Val: {X_val.shape[0]}, Test: {X_test.shape[0]}")
+    logger.info(f"  Feature dimension: {X_train_base.shape[1]}")
+    logger.info(f"  Train class distribution: {np.bincount(y_train_base, minlength=num_classes)}")
+    logger.info(f"  Test class distribution:  {np.bincount(y_test, minlength=num_classes)}")
+
+    # Step 7: Augment ONLY training data (test stays clean / untouched)
+    logger.info("Step 7: Data augmentation (training set only)...")
     X_augmented = []
     y_augmented = []
 
-    for i in range(len(X)):
-        X_augmented.append(X[i])
-        y_augmented.append(y[i])
+    for i in range(len(X_train_base)):
+        X_augmented.append(X_train_base[i])
+        y_augmented.append(y_train_base[i])
 
-        # Add 49 noisy copies for 30k-scale training dataset
-        for _ in range(49):
-            noise = rng.normal(0, 0.02, size=X[i].shape)
-            noisy_sample = X[i] + noise
+        # Add 19 noisy copies (20x total) — enough with 120 base programs
+        for _ in range(19):
+            noise = rng.normal(0, 0.02, size=X_train_base[i].shape)
+            noisy_sample = X_train_base[i] + noise
             # Re-normalize priority vector (last 4 dims)
             pri = noisy_sample[-4:]
             pri = np.clip(pri, 0.01, 1.0)
             pri = pri / pri.sum()
             noisy_sample[-4:] = pri
             X_augmented.append(noisy_sample)
-            y_augmented.append(y[i])
+            y_augmented.append(y_train_base[i])
 
-    X = np.array(X_augmented)
-    y = np.array(y_augmented)
+    X_train = np.array(X_augmented)
+    y_train = np.array(y_augmented)
 
-    logger.info(f"  After augmentation: {X.shape[0]} samples")
+    # Shuffle training data
+    train_perm = rng.permutation(len(X_train))
+    X_train = X_train[train_perm]
+    y_train = y_train[train_perm]
 
-    # Step 7: Shuffle and split
-    logger.info("Step 7: Train/val/test split...")
-    indices = rng.permutation(len(X))
-    X, y = X[indices], y[indices]
-
-    train_ratio = config['dataset']['train_ratio']
-    val_ratio = config['dataset']['val_ratio']
-
-    n_train = int(len(X) * train_ratio)
-    n_val = int(len(X) * val_ratio)
-
-    X_train = X[:n_train]
-    y_train = y[:n_train]
-    X_val = X[n_train:n_train + n_val]
-    y_val = y[n_train:n_train + n_val]
-    X_test = X[n_train + n_val:]
-    y_test = y[n_train + n_val:]
-
-    logger.info(f"  Train: {X_train.shape[0]}, Val: {X_val.shape[0]}, Test: {X_test.shape[0]}")
+    logger.info(f"  After augmentation — Train: {X_train.shape[0]}, Val: {X_val.shape[0]}, Test: {X_test.shape[0]}")
 
     # Save
     data_loader.save_dataset(X_train, X_val, X_test, y_train, y_val, y_test)
@@ -640,8 +695,13 @@ def generate_dataset(config_path: str = "config/config.yaml"):
     program_info = {
         'names': [p.name for p in programs],
         'num_programs': len(programs),
-        'feature_dim': X.shape[1],
+        'feature_dim': X_train.shape[1],
         'num_classes': num_classes,
+        'split': {
+            'train_programs': train_prog_names,
+            'val_programs': val_prog_names,
+            'test_programs': test_prog_names,
+        }
     }
     import json
     info_path = os.path.join(config['paths']['raw_dir'], 'program_info.json')
@@ -649,8 +709,11 @@ def generate_dataset(config_path: str = "config/config.yaml"):
         json.dump(program_info, f, indent=2)
 
     logger.info("=" * 60)
-    logger.info("DATASET GENERATION COMPLETE")
-    logger.info(f"Total: {X.shape[0]} samples, {X.shape[1]} features, {num_classes} classes")
+    logger.info("DATASET GENERATION COMPLETE (PROGRAM-LEVEL SPLIT)")
+    logger.info(f"Train: {X_train.shape[0]} samples ({n_train_progs} programs, augmented)")
+    logger.info(f"Val:   {X_val.shape[0]} samples ({n_val_progs} programs, clean)")
+    logger.info(f"Test:  {X_test.shape[0]} samples ({n_test_progs} programs, clean)")
+    logger.info(f"Features: {X_train.shape[1]}, Classes: {num_classes}")
     logger.info("=" * 60)
 
     return X_train, X_val, X_test, y_train, y_val, y_test

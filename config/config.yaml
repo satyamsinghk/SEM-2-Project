@@ -17,11 +17,11 @@ paths:
   features_dir: "data/features"
   labels_dir: "data/labels"
   processed_dir: "data/processed"
-  results_dir: "result_30k"
-  figures_dir: "result_30k/figures"
-  tables_dir: "result_30k/tables"
-  logs_dir: "result_30k/logs"
-  models_dir: "result_30k/models"
+  results_dir: "result_real"
+  figures_dir: "result_real/figures"
+  tables_dir: "result_real/tables"
+  logs_dir: "result_real/logs"
+  models_dir: "result_real/models"
 
 features:
   autophase_dim: 56
@@ -36,7 +36,7 @@ dataset:
   val_ratio: 0.15
   test_ratio: 0.15
   random_seed: 42
-  num_optimization_classes: 10
+  num_optimization_classes: 5
 
 models:
   random_forest:

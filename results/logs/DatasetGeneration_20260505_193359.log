@@ -1,0 +1,28 @@
+2026-05-05 19:34:12,699 | DatasetGeneration | INFO | generate_dataset:566 | ============================================================
+2026-05-05 19:34:12,700 | DatasetGeneration | INFO | generate_dataset:567 | DATASET GENERATION PIPELINE
+2026-05-05 19:34:12,700 | DatasetGeneration | INFO | generate_dataset:568 | ============================================================
+2026-05-05 19:34:12,734 | DatasetGeneration | INFO | generate_dataset:577 | Step 1: Creating benchmark program characteristics...
+2026-05-05 19:34:12,774 | DatasetGeneration | INFO | generate_dataset:583 |   Created 120 benchmark programs (C: 80, C++: 20, Python: 20)
+2026-05-05 19:34:12,775 | DatasetGeneration | INFO | generate_dataset:586 | Step 2: Extracting features (Autophase + CFG)...
+2026-05-05 19:34:14,303 | DatasetGeneration | INFO | generate_dataset:589 |   Feature matrix shape: (120, 91)
+2026-05-05 19:34:14,303 | DatasetGeneration | INFO | generate_dataset:592 | Step 3: Initializing pass manager...
+2026-05-05 19:34:14,305 | DatasetGeneration | INFO | generate_dataset:598 | Step 4: Generating priority vectors...
+2026-05-05 19:34:14,315 | DatasetGeneration | INFO | generate_dataset:604 |   Generated 30 priority vectors
+2026-05-05 19:34:14,315 | DatasetGeneration | INFO | generate_dataset:609 | Step 5: Program-level train/val/test split...
+2026-05-05 19:34:14,316 | DatasetGeneration | INFO | generate_dataset:629 |   Train programs (84): ['c_medium_kern_v4', 'c_medium_kern_v7', 'cholesky', 'c_large_stencil_v5', 'syr2k', 'c_graph_algo_v4', 'c_crypto_v3', 'fdtd-2d', 'c_medium_kern_v0', 'py_web_app_v3', 'durbin', 'c_graph_algo_v2', 'heat-3d', 'c_tiny_util_v6', 'cpp_template_v1', 'cpp_template_v3', 'py_ml_model_v1', '2mm', 'cpp_template_v0', 'py_web_app_v0', 'c_graph_algo_v5', 'c_medium_kern_v5', 'c_tiny_util_v1', 'c_crypto_v0', 'c_medium_kern_v2', 'jacobi-1d', 'lu', 'py_text_nlp_v2', 'c_crypto_v6', 'cpp_smart_ptr_v1', 'mvt', 'c_crypto_v8', 'nussinov', 'cpp_smart_ptr_v0', 'c_large_stencil_v6', 'py_ml_model_v2', 'c_tiny_util_v0', 'c_large_stencil_v3', 'py_scientific_v2', 'gesummv', 'c_tiny_util_v3', 'symm', 'c_graph_algo_v9', 'trmm', 'cpp_smart_ptr_v2', 'cpp_oop_inherit_v1', 'correlation', 'cpp_template_v2', 'c_graph_algo_v8', 'c_tiny_util_v9', 'c_medium_kern_v9', 'c_tiny_util_v5', 'ludcmp', 'c_graph_algo_v6', 'c_tiny_util_v4', 'py_text_nlp_v1', 'gemm', 'c_medium_kern_v3', 'c_crypto_v2', 'c_graph_algo_v7', 'cpp_stl_algo_v3', 'syrk', 'gramschmidt', 'cpp_exception_v3', 'py_data_proc_v0', 'gemver', 'jacobi-2d', 'cpp_oop_inherit_v0', 'bicg', 'trisolv', 'c_tiny_util_v8', 'py_scientific_v1', 'covariance', 'c_crypto_v7', 'py_ml_model_v3', 'cpp_exception_v2', 'c_large_stencil_v4', 'c_large_stencil_v0', 'cpp_stl_algo_v0', 'c_medium_kern_v6', 'cpp_stl_algo_v1', 'c_graph_algo_v1', 'py_scientific_v0', 'c_crypto_v9']
+2026-05-05 19:34:14,316 | DatasetGeneration | INFO | generate_dataset:630 |   Val programs (18): ['cpp_exception_v1', 'c_medium_kern_v1', 'c_large_stencil_v8', 'c_medium_kern_v8', 'py_data_proc_v1', 'c_large_stencil_v7', 'c_crypto_v5', 'c_tiny_util_v2', 'py_text_nlp_v0', 'c_large_stencil_v9', 'c_graph_algo_v3', 'py_web_app_v1', 'c_tiny_util_v7', 'matrix_multiply', 'py_text_nlp_v3', '3mm', 'c_large_stencil_v2', 'doitgen']
+2026-05-05 19:34:14,316 | DatasetGeneration | INFO | generate_dataset:631 |   Test programs (18): ['atax', 'floyd-warshall', 'py_data_proc_v3', 'cpp_smart_ptr_v3', 'cpp_oop_inherit_v3', 'py_ml_model_v0', 'c_crypto_v4', 'cpp_oop_inherit_v2', 'cpp_stl_algo_v2', 'py_scientific_v3', 'deriche', 'c_graph_algo_v0', 'c_crypto_v1', 'py_web_app_v2', 'seidel-2d', 'cpp_exception_v0', 'c_large_stencil_v1', 'py_data_proc_v2']
+2026-05-05 19:34:14,317 | DatasetGeneration | INFO | generate_dataset:634 | Step 6: Creating labeled dataset (features + priority → optimal class)...
+2026-05-05 19:34:20,376 | DatasetGeneration | INFO | generate_dataset:654 |   Base train: 2520, Val: 540, Test: 540
+2026-05-05 19:34:20,376 | DatasetGeneration | INFO | generate_dataset:655 |   Feature dimension: 95
+2026-05-05 19:34:20,376 | DatasetGeneration | INFO | generate_dataset:656 |   Train class distribution: [ 100 1637  187  160  436]
+2026-05-05 19:34:20,377 | DatasetGeneration | INFO | generate_dataset:657 |   Test class distribution:  [ 13 302 117  33  75]
+2026-05-05 19:34:20,377 | DatasetGeneration | INFO | generate_dataset:660 | Step 7: Data augmentation (training set only)...
+2026-05-05 19:34:21,509 | DatasetGeneration | INFO | generate_dataset:688 |   After augmentation — Train: 50400, Val: 540, Test: 540
+2026-05-05 19:34:21,590 | DatasetGeneration | INFO | generate_dataset:711 | ============================================================
+2026-05-05 19:34:21,591 | DatasetGeneration | INFO | generate_dataset:712 | DATASET GENERATION COMPLETE (PROGRAM-LEVEL SPLIT)
+2026-05-05 19:34:21,591 | DatasetGeneration | INFO | generate_dataset:713 | Train: 50400 samples (84 programs, augmented)
+2026-05-05 19:34:21,591 | DatasetGeneration | INFO | generate_dataset:714 | Val:   540 samples (18 programs, clean)
+2026-05-05 19:34:21,591 | DatasetGeneration | INFO | generate_dataset:715 | Test:  540 samples (18 programs, clean)
+2026-05-05 19:34:21,592 | DatasetGeneration | INFO | generate_dataset:716 | Features: 95, Classes: 5
+2026-05-05 19:34:21,592 | DatasetGeneration | INFO | generate_dataset:717 | ============================================================
